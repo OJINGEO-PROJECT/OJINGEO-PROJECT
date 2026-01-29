@@ -3,17 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>OJINGEO PROJECT</title>
+  <!-- FAVICON -->
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 @font-face {
   font-family: "SquidFont";
-  src: url("./fonts/squid.ttf") format("truetype");
+  src: url("fonts/squid.ttf") format("truetype");
   font-display: swap;
 }
 
-* {
-  font-family: "SquidFont", Arial, sans-serif !important;
+html, body, * {
+  font-family: "SquidFont" !important;
   box-sizing: border-box;
 }
 
@@ -24,6 +27,7 @@ body {
   text-align: center;
 }
 
+/* LOADING */
 #loadingScreen {
   position: fixed;
   inset: 0;
@@ -31,10 +35,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
   font-size: 48px;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
 }
 
+/* HEADER */
 header {
   padding: 80px 20px 60px;
   background: radial-gradient(circle at top, #1a1a1a, #000);
@@ -46,12 +52,6 @@ header img {
   margin-bottom: 20px;
 }
 
-header p {
-  opacity: 0.85;
-  max-width: 700px;
-  margin: 0 auto 25px;
-}
-
 .btn {
   padding: 14px 28px;
   background: #ff3b3b;
@@ -60,7 +60,6 @@ header p {
   cursor: pointer;
   border-radius: 6px;
   margin: 6px;
-  text-decoration: none;
   font-size: 16px;
 }
 
@@ -77,27 +76,44 @@ header p {
   gap: 10px;
 }
 
+/* SECTIONS */
 section {
   padding: 80px 20px;
   max-width: 1000px;
   margin: auto;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
 .hidden {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: -9999px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 25px;
+/* CAROUSEL */
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
   margin-top: 40px;
+}
+
+.arrow {
+  font-size: 42px;
+  background: none;
+  border: none;
+  color: #ff3b3b;
+  cursor: pointer;
 }
 
 .card {
   background: #141414;
   border-radius: 10px;
   padding: 25px;
+  width: 320px;
   border: 1px solid #222;
 }
 
@@ -107,6 +123,15 @@ section {
   margin-bottom: 12px;
 }
 
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+/* INPUTS */
 input {
   padding: 12px;
   margin: 6px;
@@ -115,6 +140,7 @@ input {
   width: 260px;
 }
 
+/* FOOTER */
 footer {
   padding: 40px 20px;
   background: #000;
@@ -127,6 +153,8 @@ footer {
 
 <div id="loadingScreen">LOADING…</div>
 
+<audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
+
 <header>
   <div class="top-right-buttons">
     <button class="btn secondary" onclick="switchPage('home')">Home</button>
@@ -134,11 +162,11 @@ footer {
     <button class="btn secondary" onclick="switchPage('account')">Account</button>
   </div>
 
-  <img src="images/logo.png" alt="OJINGEO PROJECT">
+  <img src="images/logo.png">
 
   <p>
-    A non-profit PC fan-game inspired by SQUID GAME.  
-    Survive twisted childhood games. One winner. No mercy.
+    A non-profit PC fan-game inspired by SQUID GAME.<br>
+    Survive twisted childhood games. One winner.
   </p>
 
   <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">
@@ -146,66 +174,88 @@ footer {
   </a>
 </header>
 
+<!-- HOME -->
 <section id="home">
-  <h2>About the Game</h2>
-  <p>
-    OJINGEO PROJECT is a brutal multiplayer survival experience inspired by Netflix’s Squid Game.
-    Compete in deadly mini-games, make impossible choices, and fight to be the last one standing.
-  </p>
+  <h2>Games (Season 1–3)</h2>
+
+  <div class="carousel">
+    <button class="arrow" onclick="prevGame()">◀</button>
+
+    <div class="card">
+      <img id="gameImg">
+      <h3 id="gameTitle"></h3>
+      <p id="gameDesc"></p>
+    </div>
+
+    <button class="arrow" onclick="nextGame()">▶</button>
+  </div>
+
+  <h2 style="margin-top:80px;">Game Modes</h2>
 
   <div class="grid">
     <div class="card">
-      <img src="images/shot1.png">
-      <h3>Red Light, Green Light</h3>
-      <p>Move at the wrong time and you're eliminated.</p>
+      <h3>Frontman Mode</h3>
+      <p>Control the games. Enforce the rules.</p>
     </div>
 
     <div class="card">
-      <img src="images/shot2.png">
-      <h3>Dalgona</h3>
-      <p>Precision decides life or death.</p>
+      <h3>Guard Mode</h3>
+      <p>Serve the organization. Eliminate players.</p>
     </div>
 
     <div class="card">
-      <img src="images/shot3.png">
-      <h3>Final Game</h3>
-      <p>Only one player survives.</p>
+      <h3>Multiplayer Mode</h3>
+      <p>Up to 100 players worldwide.</p>
+    </div>
+
+    <div class="card">
+      <h3>Jun-ho Files</h3>
+      <p>Investigate the island as detective Jun-ho.</p>
     </div>
   </div>
 </section>
 
+<!-- MANUAL -->
 <section id="manual" class="hidden">
   <h2>Manual</h2>
-  <p>• Follow the rules exactly.</p>
-  <p>• Fail a challenge and you are eliminated.</p>
-  <p>• There are no second chances.</p>
-  <p>• Winning means surviving.</p>
+  <p>Follow the rules.</p>
+  <p>Fail and you are eliminated.</p>
+  <p>No mercy.</p>
 </section>
 
+<!-- ACCOUNT -->
 <section id="account" class="hidden">
-  <h2>Account</h2>
-  <p id="userStatus">Not logged in</p>
 
-  <h3>Login</h3>
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password"><br>
-  <button class="btn" onclick="login()">Login</button>
+  <div id="authUI">
+    <h2>Account</h2>
 
-  <hr style="opacity:0.2; margin:40px 0;">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password"><br>
+    <button class="btn" onclick="login()">Login</button>
 
-  <h3>Create Account</h3>
-  <input id="regEmail" placeholder="Email">
-  <input id="regPassword" type="password" placeholder="Password"><br>
-  <button class="btn" onclick="register()">Create Account</button>
+    <hr style="opacity:.2; margin:40px 0;">
 
-  <br><br>
-  <button class="btn secondary" onclick="logout()">Logout</button>
+    <input id="regEmail" placeholder="Email">
+    <input id="regPassword" type="password" placeholder="Password"><br>
+    <button class="btn" onclick="register()">Create Account</button>
+  </div>
+
+  <div id="profileUI" class="hidden">
+    <h2>Your Profile</h2>
+    <input placeholder="Username">
+    <input type="file"><br>
+    <p>Progress: 0%</p>
+    <button class="btn">Link Account to Game</button><br><br>
+    <button class="btn secondary" onclick="logout()">Logout</button>
+  </div>
+
 </section>
 
 <footer>
-  © 2026 SATOSHI TEAM — Non-profit fan project
+© 2026 SATOSHI TEAM — Non-profit fan project
 </footer>
 
+<!-- SCRIPTS -->
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
@@ -214,46 +264,93 @@ const supabase = createClient(
   "sb_publishable_u_LaQ5HSQ1c8QgnFm290uA_wCZ7QphV"
 );
 
-const statusText = document.getElementById("userStatus");
-
+// LOGIN
 window.login = async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
+  });
   if (error) alert(error.message);
   else location.reload();
 };
 
+// REGISTER with player number
 window.register = async () => {
-  const email = document.getElementById("regEmail").value;
-  const password = document.getElementById("regPassword").value;
-  const { error } = await supabase.auth.signUp({ email, password });
+  const email = regEmail.value;
+  const password = regPassword.value;
+
+  const playerNumber = String(Math.floor(Math.random() * 456) + 1).padStart(3, "0");
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { player_number: playerNumber }
+    }
+  });
+
   if (error) alert(error.message);
-  else alert("Account created. Check your email.");
+  else alert(`Check your email to verify. Your player number: ${playerNumber}`);
 };
 
+// LOGOUT
 window.logout = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
-async function checkAuth() {
-  const { data } = await supabase.auth.getSession();
-  if (data.session) {
-    statusText.textContent = "Logged in as " + data.session.user.email;
-  }
+// SHOW PROFILE IF LOGGED IN
+const { data } = await supabase.auth.getSession();
+if (data.session && data.session.user.email_confirmed_at) {
+  authUI.classList.add("hidden");
+  profileUI.classList.remove("hidden");
 }
-checkAuth();
 </script>
 
 <script>
+/* CLICK SOUND */
+const clickSound = document.getElementById("clickSound");
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("btn")) {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
+});
+
+/* PAGE SWITCH */
 function switchPage(id) {
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
 
-window.addEventListener("load", () => {
-  document.getElementById("loadingScreen").style.display = "none";
+/* CAROUSEL DATA */
+const games = [
+  {img:"images/shot1.png", title:"Red Light, Green Light", desc:"Move at the wrong time."},
+  {img:"images/shot2.png", title:"Dalgona", desc:"Precision or death."},
+  {img:"images/shot3.png", title:"Tug of War", desc:"Strength & teamwork."},
+  {img:"images/shot4.png", title:"Glass Bridge", desc:"One wrong step."},
+  {img:"images/shot5.png", title:"Final Game", desc:"Only one survives."}
+];
+
+let index = 0;
+const gameImg = document.getElementById("gameImg");
+const gameTitle = document.getElementById("gameTitle");
+const gameDesc = document.getElementById("gameDesc");
+
+function renderGame() {
+  gameImg.src = games[index].img;
+  gameTitle.textContent = games[index].title;
+  gameDesc.textContent = games[index].desc;
+}
+renderGame();
+
+function nextGame(){ index=(index+1)%games.length; renderGame(); }
+function prevGame(){ index=(index-1+games.length)%games.length; renderGame(); }
+
+/* LOAD SCREEN FADE */
+window.addEventListener("load",()=>{
+  loadingScreen.style.opacity=0;
+  setTimeout(()=>loadingScreen.remove(),800);
 });
 </script>
 

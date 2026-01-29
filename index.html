@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OJINGEO PROJECT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+@font-face {
+  font-family: 'SquidFont';
+  src: url('fonts/squid.ttf') format('truetype');
+}
+
+* {
+  font-family: 'SquidFont', Arial, sans-serif;
+}
+
+body {
+  margin:0;
+  background:#0f0f0f;
+  color:#fff;
+  text-align:center;
+}
+
+#loadingScreen {
+  position:fixed;
+  inset:0;
+  background:#0f0f0f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+header {
+  padding:60px 20px;
+  background:#000;
+  position:relative;
+}
+
+header img {
+  width:280px;
+  margin-bottom:15px;
+}
+
+.btn {
+  padding:12px 24px;
+  background:#ff3b3b;
+  border:none;
+  color:white;
+  cursor:pointer;
+  border-radius:6px;
+  margin:6px;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.top-right-buttons {
+  position:absolute;
+  top:20px;
+  right:20px;
+  display:flex;
+  gap:10px;
+}
+
+section {
+  padding:60px 20px;
+  max-width:900px;
+  margin:auto;
+}
+
+.hidden {
+  display:none;
+}
+
+input {
+  padding:12px;
+  margin:6px;
+  border-radius:4px;
+  border:none;
+  width:260px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loadingScreen">
+  <h1>LOADING…</h1>
+</div>
+
+<header>
+  <img src="images/logo.png" alt="OJINGEO PROJECT">
+
+  <p>A non-profit SQUID GAME fan-game for PC (Windows).</p>
+
+  <!-- ITCH.IO BUTTON (RESTORED) -->
+  <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">
+    Play it now on itch.io!
+  </a>
+
+  <!-- NAV -->
+  <div class="top-right-buttons">
+    <button class="btn" onclick="switchPage('home')">Home</button>
+    <button class="btn" onclick="switchPage('manual')">Manual</button>
+    <button class="btn" onclick="switchPage('account')">Account</button>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home">
+  <h2>About the Game</h2>
+  <p>
+    OJINGEO PROJECT is a fast-paced survival experience inspired by Squid Game.
+    Outsmart opponents, survive deadly childhood games, and uncover the truth.
+  </p>
+</section>
+
+<!-- MANUAL -->
+<section id="manual" class="hidden">
+  <h2>Manual</h2>
+  <p>Follow the rules. Fail, and you are eliminated.</p>
+</section>
+
+<!-- ACCOUNT PAGE (ONLY PLACE WITH AUTH) -->
+<section id="account" class="hidden">
+  <h2>Account</h2>
+  <p id="userStatus">Not logged in</p>
+
+  <h3>Login</h3>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password"><br>
+  <button class="btn" onclick="login()">Login</button>
+
+  <hr style="opacity:0.2; margin:40px 0;">
+
+  <h3>Create Account</h3>
+  <input id="regEmail" placeholder="Email">
+  <input id="regPassword" type="password" placeholder="Password"><br>
+  <button class="btn" onclick="register()">Create Account</button>
+
+  <br><br>
+  <button class="btn" onclick="logout()">Logout</button>
+</section>
+
+<footer>© 2026 SATOSHI TEAM</footer>
+
+<!-- SUPABASE (SAFE) -->
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://wodzqfuxxpewrvqyedqu.supabase.co",
+  "sb_publishable_u_LaQ5HSQ1c8QgnFm290uA_wCZ7QphV"
+);
+
+const statusText = document.getElementById("userStatus");
+
+window.login = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) alert(error.message);
+  else location.reload();
+};
+
+window.register = async () => {
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+  const { error } = await supabase.auth.signUp({ email, password });
+  if (error) alert(error.message);
+  else alert("Account created. Check your email.");
+};
+
+window.logout = async () => {
+  await supabase.auth.signOut();
+  location.reload();
+};
+
+async function checkAuth() {
+  const { data } = await supabase.auth.getSession();
+  if (data.session) {
+    statusText.textContent = "Logged in as " + data.session.user.email;
+  }
+}
+
+checkAuth();
+</script>
+
+<script>
+function switchPage(id) {
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+window.addEventListener("load", () => {
+  document.getElementById("loadingScreen").style.display = "none";
+});
+</script>
+
+</body>
+</html>

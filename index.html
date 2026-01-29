@@ -7,122 +7,181 @@
 
 <style>
 @font-face {
-  font-family: 'SquidFont';
-  src: url('fonts/squid.ttf') format('truetype');
+  font-family: "SquidFont";
+  src: url("./fonts/squid.ttf") format("truetype");
+  font-display: swap;
 }
 
 * {
-  font-family: 'SquidFont', Arial, sans-serif;
+  font-family: "SquidFont", Arial, sans-serif !important;
+  box-sizing: border-box;
 }
 
 body {
-  margin:0;
-  background:#0f0f0f;
-  color:#fff;
-  text-align:center;
+  margin: 0;
+  background: #0f0f0f;
+  color: #fff;
+  text-align: center;
 }
 
 #loadingScreen {
-  position:fixed;
-  inset:0;
-  background:#0f0f0f;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+  position: fixed;
+  inset: 0;
+  background: #0f0f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-size: 48px;
 }
 
 header {
-  padding:60px 20px;
-  background:#000;
-  position:relative;
+  padding: 80px 20px 60px;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  position: relative;
 }
 
 header img {
-  width:280px;
-  margin-bottom:15px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+header p {
+  opacity: 0.85;
+  max-width: 700px;
+  margin: 0 auto 25px;
 }
 
 .btn {
-  padding:12px 24px;
-  background:#ff3b3b;
-  border:none;
-  color:white;
-  cursor:pointer;
-  border-radius:6px;
-  margin:6px;
-  text-decoration:none;
-  display:inline-block;
+  padding: 14px 28px;
+  background: #ff3b3b;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 6px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.btn.secondary {
+  background: #222;
+  border: 1px solid #444;
 }
 
 .top-right-buttons {
-  position:absolute;
-  top:20px;
-  right:20px;
-  display:flex;
-  gap:10px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
 }
 
 section {
-  padding:60px 20px;
-  max-width:900px;
-  margin:auto;
+  padding: 80px 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .hidden {
-  display:none;
+  display: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.card {
+  background: #141414;
+  border-radius: 10px;
+  padding: 25px;
+  border: 1px solid #222;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 12px;
 }
 
 input {
-  padding:12px;
-  margin:6px;
-  border-radius:4px;
-  border:none;
-  width:260px;
+  padding: 12px;
+  margin: 6px;
+  border-radius: 4px;
+  border: none;
+  width: 260px;
+}
+
+footer {
+  padding: 40px 20px;
+  background: #000;
+  opacity: 0.6;
 }
 </style>
 </head>
 
 <body>
 
-<div id="loadingScreen">
-  <h1>LOADING…</h1>
-</div>
+<div id="loadingScreen">LOADING…</div>
 
 <header>
+  <div class="top-right-buttons">
+    <button class="btn secondary" onclick="switchPage('home')">Home</button>
+    <button class="btn secondary" onclick="switchPage('manual')">Manual</button>
+    <button class="btn secondary" onclick="switchPage('account')">Account</button>
+  </div>
+
   <img src="images/logo.png" alt="OJINGEO PROJECT">
 
-  <p>A non-profit SQUID GAME fan-game for PC (Windows).</p>
+  <p>
+    A non-profit PC fan-game inspired by SQUID GAME.  
+    Survive twisted childhood games. One winner. No mercy.
+  </p>
 
-  <!-- ITCH.IO BUTTON (RESTORED) -->
   <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">
-    Play it now on itch.io!
+    Play on itch.io
   </a>
-
-  <!-- NAV -->
-  <div class="top-right-buttons">
-    <button class="btn" onclick="switchPage('home')">Home</button>
-    <button class="btn" onclick="switchPage('manual')">Manual</button>
-    <button class="btn" onclick="switchPage('account')">Account</button>
-  </div>
 </header>
 
-<!-- HOME -->
 <section id="home">
   <h2>About the Game</h2>
   <p>
-    OJINGEO PROJECT is a fast-paced survival experience inspired by Squid Game.
-    Outsmart opponents, survive deadly childhood games, and uncover the truth.
+    OJINGEO PROJECT is a brutal multiplayer survival experience inspired by Netflix’s Squid Game.
+    Compete in deadly mini-games, make impossible choices, and fight to be the last one standing.
   </p>
+
+  <div class="grid">
+    <div class="card">
+      <img src="images/shot1.png">
+      <h3>Red Light, Green Light</h3>
+      <p>Move at the wrong time and you're eliminated.</p>
+    </div>
+
+    <div class="card">
+      <img src="images/shot2.png">
+      <h3>Dalgona</h3>
+      <p>Precision decides life or death.</p>
+    </div>
+
+    <div class="card">
+      <img src="images/shot3.png">
+      <h3>Final Game</h3>
+      <p>Only one player survives.</p>
+    </div>
+  </div>
 </section>
 
-<!-- MANUAL -->
 <section id="manual" class="hidden">
   <h2>Manual</h2>
-  <p>Follow the rules. Fail, and you are eliminated.</p>
+  <p>• Follow the rules exactly.</p>
+  <p>• Fail a challenge and you are eliminated.</p>
+  <p>• There are no second chances.</p>
+  <p>• Winning means surviving.</p>
 </section>
 
-<!-- ACCOUNT PAGE (ONLY PLACE WITH AUTH) -->
 <section id="account" class="hidden">
   <h2>Account</h2>
   <p id="userStatus">Not logged in</p>
@@ -140,12 +199,13 @@ input {
   <button class="btn" onclick="register()">Create Account</button>
 
   <br><br>
-  <button class="btn" onclick="logout()">Logout</button>
+  <button class="btn secondary" onclick="logout()">Logout</button>
 </section>
 
-<footer>© 2026 SATOSHI TEAM</footer>
+<footer>
+  © 2026 SATOSHI TEAM — Non-profit fan project
+</footer>
 
-<!-- SUPABASE (SAFE) -->
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
@@ -183,7 +243,6 @@ async function checkAuth() {
     statusText.textContent = "Logged in as " + data.session.user.email;
   }
 }
-
 checkAuth();
 </script>
 

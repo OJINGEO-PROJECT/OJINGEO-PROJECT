@@ -15,10 +15,7 @@
   font-display: swap;
 }
 
-html, body, * {
-  font-family: "SquidFont" !important;
-  box-sizing: border-box;
-}
+html, body, * { font-family: "SquidFont" !important; box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -47,10 +44,7 @@ header {
   position: relative;
 }
 
-header img {
-  width: 300px;
-  margin-bottom: 20px;
-}
+header img { width: 300px; margin-bottom: 20px; }
 
 .btn {
   padding: 14px 28px;
@@ -63,17 +57,16 @@ header img {
   font-size: 16px;
 }
 
-.btn.secondary {
-  background: #222;
-  border: 1px solid #444;
-}
+.btn.secondary { background: #222; border: 1px solid #444; }
 
 .top-right-buttons {
   position: absolute;
   top: 20px;
   right: 20px;
   display: flex;
+  flex-direction: column;
   gap: 10px;
+  text-align: right;
 }
 
 /* SECTIONS */
@@ -93,12 +86,12 @@ section {
 }
 
 /* CAROUSEL */
-.carousel-container {
+.carousel {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 30px;
+  margin-top: 40px;
 }
 
 .arrow {
@@ -113,41 +106,32 @@ section {
   background: #141414;
   border-radius: 10px;
   padding: 25px;
-  width: 400px;
+  width: 320px;
   border: 1px solid #222;
 }
 
 .card img {
   width: 100%;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  border-radius: 6px;
+  margin-bottom: 12px;
 }
 
-/* VERTICAL GAME MODES */
+/* GAME MODES VERTICAL */
 .game-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 40px;
   text-align: left;
 }
 
-.game-modes .card {
-  margin-bottom: 15px;
-  padding: 20px;
-}
+.game-modes .card { width: 100%; }
 
 /* INPUTS */
-input {
-  padding: 12px;
-  margin: 6px;
-  border-radius: 4px;
-  border: none;
-  width: 260px;
-}
+input { padding: 12px; margin: 6px; border-radius: 4px; border: none; width: 260px; }
 
 /* FOOTER */
-footer {
-  padding: 40px 20px;
-  background: #000;
-  opacity: 0.6;
-}
+footer { padding: 40px 20px; background: #000; opacity: 0.6; }
 </style>
 </head>
 
@@ -165,10 +149,7 @@ footer {
 
   <img src="images/logo.png">
 
-  <p>
-    A non-profit PC fan-game inspired by SQUID GAME.<br>
-    Survive twisted childhood games. One winner.
-  </p>
+  <p>A non-profit PC fan-game inspired by SQUID GAME.<br>Survive twisted childhood games. One winner.</p>
 
   <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">
     Play on itch.io
@@ -179,7 +160,7 @@ footer {
 <section id="home">
   <h2>Games (Season 1–3)</h2>
 
-  <div class="carousel-container">
+  <div class="carousel">
     <button class="arrow" onclick="prevGame()">◀</button>
 
     <div class="card">
@@ -192,23 +173,19 @@ footer {
   </div>
 
   <h2 style="margin-top:80px;">Game Modes</h2>
-
-  <div class="game-modes" style="max-width:500px; margin:40px auto;">
+  <div class="game-modes">
     <div class="card">
       <h3>Frontman Mode</h3>
       <p>Control the games. Enforce the rules.</p>
     </div>
-
     <div class="card">
       <h3>Guard Mode</h3>
       <p>Serve the organization. Eliminate players.</p>
     </div>
-
     <div class="card">
       <h3>Multiplayer Mode</h3>
       <p>Up to 100 players worldwide.</p>
     </div>
-
     <div class="card">
       <h3>Jun-ho Files</h3>
       <p>Investigate the island as detective Jun-ho.</p>
@@ -219,17 +196,15 @@ footer {
 <!-- MANUAL -->
 <section id="manual" class="hidden">
   <h2>Manual</h2>
-  <p>Follow the rules.</p>
-  <p>Fail and you are eliminated.</p>
-  <p>No mercy.</p>
+  <p>Follow the rules. Fail and you are eliminated. No mercy.</p>
 </section>
 
 <!-- ACCOUNT -->
 <section id="account" class="hidden">
 
+  <!-- LOGIN / REGISTER -->
   <div id="authUI">
     <h2>Account</h2>
-
     <input id="email" placeholder="Email">
     <input id="password" type="password" placeholder="Password"><br>
     <button class="btn" onclick="login()">Login</button>
@@ -241,22 +216,21 @@ footer {
     <button class="btn" onclick="register()">Create Account</button>
   </div>
 
+  <!-- PROFILE UI -->
   <div id="profileUI" class="hidden">
     <h2>Your Profile</h2>
-    <input placeholder="Username">
-    <input type="file"><br>
-    <p>Progress: 0%</p>
-    <button class="btn">Link Account to Game</button><br><br>
+    <input id="profileUsername" placeholder="Username"><br>
+    <input id="profileImage" type="file"><br>
+    <p>Progress: <span id="profileProgress">0%</span></p>
+
+    <button class="btn" onclick="saveProfile()">Save Profile</button>
+    <button class="btn secondary" onclick="deleteProfile()">Delete Account</button>
     <button class="btn secondary" onclick="logout()">Logout</button>
   </div>
-
 </section>
 
-<footer>
-© 2026 SATOSHI TEAM — Non-profit fan project
-</footer>
+<footer>© 2026 SATOSHI TEAM — Non-profit fan project</footer>
 
-<!-- SCRIPTS -->
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
@@ -267,31 +241,27 @@ const supabase = createClient(
 
 // LOGIN
 window.login = async () => {
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error, data } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value
   });
-  if (error) alert(error.message);
+  if(error) alert(error.message);
   else location.reload();
 };
 
-// REGISTER with player number
+// REGISTER
 window.register = async () => {
-  const email = regEmail.value;
-  const password = regPassword.value;
-
-  const playerNumber = String(Math.floor(Math.random() * 456) + 1).padStart(3, "0");
+  const emailVal = regEmail.value;
+  const passwordVal = regPassword.value;
+  const playerNumber = String(Math.floor(Math.random() * 456) + 1).padStart(3,"0");
 
   const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { player_number: playerNumber }
-    }
+    email: emailVal,
+    password: passwordVal,
+    options: { data: { player_number: playerNumber } }
   });
-
-  if (error) alert(error.message);
-  else alert(`Check your email to verify. Your player number: ${playerNumber}`);
+  if(error) alert(error.message);
+  else alert(`Check your email to verify. Player number: ${playerNumber}`);
 };
 
 // LOGOUT
@@ -300,26 +270,69 @@ window.logout = async () => {
   location.reload();
 };
 
-// SHOW PROFILE IF LOGGED IN
-const { data } = await supabase.auth.getSession();
-if (data.session && data.session.user.email_confirmed_at) {
-  authUI.classList.add("hidden");
-  profileUI.classList.remove("hidden");
+// SAVE PROFILE
+window.saveProfile = async () => {
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
+  const username = document.getElementById("profileUsername").value;
+  const fileInput = document.getElementById("profileImage");
+  let imageUrl = null;
+
+  if(fileInput.files.length > 0){
+    const file = fileInput.files[0];
+    const { data, error: uploadError } = await supabase
+      .storage
+      .from("profiles")
+      .upload(`avatars/${user.id}_${file.name}`, file, { upsert: true });
+    if(uploadError) { alert(uploadError.message); return; }
+    imageUrl = supabase.storage.from("profiles").getPublicUrl(data.path).publicUrl;
+  }
+
+  const { error } = await supabase.from("profiles").upsert([{ id: user.id, username, avatar: imageUrl }]);
+  if(error) alert(error.message);
+  else alert("Profile saved!");
+};
+
+// DELETE PROFILE
+window.deleteProfile = async () => {
+  const confirmDelete = confirm("Are you sure you want to delete your account?");
+  if(!confirmDelete) return;
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
+  const { error } = await supabase.auth.admin.deleteUser(user.id);
+  if(error) alert(error.message);
+  else location.reload();
+};
+
+// LOAD PROFILE IF LOGGED IN
+async function loadProfile(){
+  const { data: sessionData } = await supabase.auth.getSession();
+  if(sessionData.session && sessionData.session.user.email_confirmed_at){
+    authUI.classList.add("hidden");
+    profileUI.classList.remove("hidden");
+    const userId = sessionData.session.user.id;
+    const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
+    if(data){
+      profileUsername.value = data.username || "";
+      profileProgress.textContent = data.progress || "0%";
+    }
+  }
 }
+loadProfile();
 </script>
 
 <script>
 /* CLICK SOUND */
 const clickSound = document.getElementById("clickSound");
 document.addEventListener("click", e => {
-  if (e.target.classList.contains("btn")) {
+  if(e.target.classList.contains("btn")){
     clickSound.currentTime = 0;
     clickSound.play();
   }
 });
 
 /* PAGE SWITCH */
-function switchPage(id) {
+function switchPage(id){
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
@@ -329,14 +342,14 @@ const games = [
   {img:"images/shot1.png", title:"Red Light, Green Light", desc:"Move at the wrong time."},
   {img:"images/shot2.png", title:"Dalgona", desc:"Precision or death."},
   {img:"images/shot3.png", title:"Tug of War", desc:"Strength & teamwork."},
-  {img:"images/shot4.png", title:"Marbles", desc:"Outsmart your opponent."},
+  {img:"images/shot4.png", title:"Marbles", desc:"Luck & strategy."},
   {img:"images/shot5.png", title:"Glass Bridge", desc:"One wrong step."},
   {img:"images/shot6.png", title:"Squid Game", desc:"Final showdown."},
-  {img:"images/shot7.png", title:"Pentathlon", desc:"Complete all challenges."},
-  {img:"images/shot8.png", title:"Mingle", desc:"Choose wisely."},
+  {img:"images/shot7.png", title:"Pentathalon", desc:"Complete 5 games."},
+  {img:"images/shot8.png", title:"Mingle", desc:"Find the correct room."},
   {img:"images/shot9.png", title:"Hide & Seek", desc:"Avoid being caught."},
-  {img:"images/shot10.png", title:"Jump Rope", desc:"Keep the rhythm."},
-  {img:"images/shot11.png", title:"Sky Squid Game", desc:"Ultimate aerial challenge."}
+  {img:"images/shot10.png", title:"Jump Rope", desc:"Timing is everything."},
+  {img:"images/shot11.png", title:"Sky Squid Game", desc:"High stakes finale."}
 ];
 
 let index = 0;
@@ -344,25 +357,19 @@ const gameImg = document.getElementById("gameImg");
 const gameTitle = document.getElementById("gameTitle");
 const gameDesc = document.getElementById("gameDesc");
 
-function renderGame() {
+function renderGame(){
   gameImg.src = games[index].img;
   gameTitle.textContent = games[index].title;
   gameDesc.textContent = games[index].desc;
 }
 renderGame();
 
-function nextGame() { 
-  index = (index + 1) % games.length; 
-  renderGame(); 
-}
-function prevGame() { 
-  index = (index - 1 + games.length) % games.length; 
-  renderGame(); 
-}
+function nextGame(){ index = (index+1) % games.length; renderGame(); }
+function prevGame(){ index = (index-1 + games.length) % games.length; renderGame(); }
 
 /* LOAD SCREEN FADE */
 window.addEventListener("load",()=>{
-  loadingScreen.style.opacity=0;
+  loadingScreen.style.opacity = 0;
   setTimeout(()=>loadingScreen.remove(),800);
 });
 </script>

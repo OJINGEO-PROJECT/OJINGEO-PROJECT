@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>OJINGEO PROJECT</title>
-  <!-- FAVICON -->
+<!-- FAVICON -->
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,12 +93,12 @@ section {
 }
 
 /* CAROUSEL */
-.carousel {
+.carousel-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  margin-top: 40px;
+  gap: 20px;
+  margin-top: 30px;
 }
 
 .arrow {
@@ -113,22 +113,24 @@ section {
   background: #141414;
   border-radius: 10px;
   padding: 25px;
-  width: 320px;
+  width: 400px;
   border: 1px solid #222;
 }
 
 .card img {
   width: 100%;
-  border-radius: 6px;
-  margin-bottom: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
 
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 25px;
-  margin-top: 40px;
+/* VERTICAL GAME MODES */
+.game-modes {
+  text-align: left;
+}
+
+.game-modes .card {
+  margin-bottom: 15px;
+  padding: 20px;
 }
 
 /* INPUTS */
@@ -152,7 +154,6 @@ footer {
 <body>
 
 <div id="loadingScreen">LOADING…</div>
-
 <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
 
 <header>
@@ -178,7 +179,7 @@ footer {
 <section id="home">
   <h2>Games (Season 1–3)</h2>
 
-  <div class="carousel">
+  <div class="carousel-container">
     <button class="arrow" onclick="prevGame()">◀</button>
 
     <div class="card">
@@ -192,7 +193,7 @@ footer {
 
   <h2 style="margin-top:80px;">Game Modes</h2>
 
-  <div class="grid">
+  <div class="game-modes" style="max-width:500px; margin:40px auto;">
     <div class="card">
       <h3>Frontman Mode</h3>
       <p>Control the games. Enforce the rules.</p>
@@ -328,8 +329,14 @@ const games = [
   {img:"images/shot1.png", title:"Red Light, Green Light", desc:"Move at the wrong time."},
   {img:"images/shot2.png", title:"Dalgona", desc:"Precision or death."},
   {img:"images/shot3.png", title:"Tug of War", desc:"Strength & teamwork."},
-  {img:"images/shot4.png", title:"Glass Bridge", desc:"One wrong step."},
-  {img:"images/shot5.png", title:"Final Game", desc:"Only one survives."}
+  {img:"images/shot4.png", title:"Marbles", desc:"Outsmart your opponent."},
+  {img:"images/shot5.png", title:"Glass Bridge", desc:"One wrong step."},
+  {img:"images/shot6.png", title:"Squid Game", desc:"Final showdown."},
+  {img:"images/shot7.png", title:"Pentathlon", desc:"Complete all challenges."},
+  {img:"images/shot8.png", title:"Mingle", desc:"Choose wisely."},
+  {img:"images/shot9.png", title:"Hide & Seek", desc:"Avoid being caught."},
+  {img:"images/shot10.png", title:"Jump Rope", desc:"Keep the rhythm."},
+  {img:"images/shot11.png", title:"Sky Squid Game", desc:"Ultimate aerial challenge."}
 ];
 
 let index = 0;
@@ -344,8 +351,14 @@ function renderGame() {
 }
 renderGame();
 
-function nextGame(){ index=(index+1)%games.length; renderGame(); }
-function prevGame(){ index=(index-1+games.length)%games.length; renderGame(); }
+function nextGame() { 
+  index = (index + 1) % games.length; 
+  renderGame(); 
+}
+function prevGame() { 
+  index = (index - 1 + games.length) % games.length; 
+  renderGame(); 
+}
 
 /* LOAD SCREEN FADE */
 window.addEventListener("load",()=>{

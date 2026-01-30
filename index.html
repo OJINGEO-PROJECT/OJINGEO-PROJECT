@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>OJINGEO PROJECT</title>
-<!-- FAVICON -->
+
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
   font-display: swap;
 }
 
-html, body, * { font-family: "SquidFont" !important; box-sizing: border-box; }
+* { box-sizing: border-box; font-family: "SquidFont" !important; }
 
 body {
   margin: 0;
@@ -34,7 +34,7 @@ body {
   justify-content: center;
   font-size: 48px;
   z-index: 9999;
-  transition: opacity 0.8s ease;
+  transition: opacity .8s ease;
 }
 
 /* HEADER */
@@ -54,91 +54,99 @@ header img { width: 300px; margin-bottom: 20px; }
   cursor: pointer;
   border-radius: 6px;
   margin: 6px;
-  font-size: 16px;
 }
 
-.btn.secondary { background: #222; border: 1px solid #444; }
+.btn.secondary { background:#222; border:1px solid #444; }
 
 .top-right-buttons {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: right;
+  position:absolute;
+  top:20px;
+  right:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
 /* SECTIONS */
 section {
-  padding: 80px 20px;
-  max-width: 1000px;
-  margin: auto;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  padding:80px 20px;
+  max-width:1000px;
+  margin:auto;
 }
 
 .hidden {
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  left: -9999px;
+  display:none;
 }
 
 /* CAROUSEL */
 .carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+  margin-top:40px;
 }
 
 .arrow {
-  font-size: 42px;
-  background: none;
-  border: none;
-  color: #ff3b3b;
-  cursor: pointer;
+  font-size:42px;
+  background:none;
+  border:none;
+  color:#ff3b3b;
+  cursor:pointer;
 }
 
 .card {
-  background: #141414;
-  border-radius: 10px;
-  padding: 25px;
-  width: 320px;
-  border: 1px solid #222;
+  background:#141414;
+  border-radius:10px;
+  padding:25px;
+  width:320px;
+  border:1px solid #222;
 }
 
 .card img {
-  width: 100%;
-  border-radius: 6px;
-  margin-bottom: 12px;
+  width:100%;
+  border-radius:6px;
 }
 
-/* GAME MODES VERTICAL */
+/* GAME MODES */
 .game-modes {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 40px;
-  text-align: left;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  margin-top:40px;
+  text-align:left;
 }
 
-.game-modes .card { width: 100%; }
+/* INPUT */
+input {
+  padding:12px;
+  margin:6px;
+  width:260px;
+  border-radius:4px;
+  border:none;
+}
 
-/* INPUTS */
-input { padding: 12px; margin: 6px; border-radius: 4px; border: none; width: 260px; }
+/* PROFILE */
+.profile-card img {
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom:10px;
+}
 
 /* FOOTER */
-footer { padding: 40px 20px; background: #000; opacity: 0.6; }
+footer {
+  padding:40px;
+  background:#000;
+  opacity:.6;
+}
 </style>
 </head>
 
 <body>
 
 <div id="loadingScreen">LOADING…</div>
-<audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
 
 <header>
   <div class="top-right-buttons">
@@ -148,8 +156,7 @@ footer { padding: 40px 20px; background: #000; opacity: 0.6; }
   </div>
 
   <img src="images/logo.png">
-
-  <p>A non-profit PC fan-game inspired by SQUID GAME.<br>Survive twisted childhood games. One winner.</p>
+  <p>A non-profit PC fan-game inspired by SQUID GAME.</p>
 
   <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">
     Play on itch.io
@@ -162,47 +169,33 @@ footer { padding: 40px 20px; background: #000; opacity: 0.6; }
 
   <div class="carousel">
     <button class="arrow" onclick="prevGame()">◀</button>
-
     <div class="card">
       <img id="gameImg">
       <h3 id="gameTitle"></h3>
       <p id="gameDesc"></p>
     </div>
-
     <button class="arrow" onclick="nextGame()">▶</button>
   </div>
 
   <h2 style="margin-top:80px;">Game Modes</h2>
   <div class="game-modes">
-    <div class="card">
-      <h3>Frontman Mode</h3>
-      <p>Control the games. Enforce the rules.</p>
-    </div>
-    <div class="card">
-      <h3>Guard Mode</h3>
-      <p>Serve the organization. Eliminate players.</p>
-    </div>
-    <div class="card">
-      <h3>Multiplayer Mode</h3>
-      <p>Up to 100 players worldwide.</p>
-    </div>
-    <div class="card">
-      <h3>Jun-ho Files</h3>
-      <p>Investigate the island as detective Jun-ho.</p>
-    </div>
+    <div class="card"><h3>Frontman Mode</h3></div>
+    <div class="card"><h3>Guard Mode</h3></div>
+    <div class="card"><h3>Multiplayer Mode</h3></div>
+    <div class="card"><h3>Jun-ho Files</h3></div>
   </div>
 </section>
 
 <!-- MANUAL -->
 <section id="manual" class="hidden">
   <h2>Manual</h2>
-  <p>Follow the rules. Fail and you are eliminated. No mercy.</p>
+  <p>Follow the rules. Fail and you are eliminated.</p>
 </section>
 
 <!-- ACCOUNT -->
 <section id="account" class="hidden">
 
-  <!-- LOGIN / REGISTER -->
+  <!-- AUTH -->
   <div id="authUI">
     <h2>Account</h2>
     <input id="email" placeholder="Email">
@@ -216,20 +209,23 @@ footer { padding: 40px 20px; background: #000; opacity: 0.6; }
     <button class="btn" onclick="register()">Create Account</button>
   </div>
 
-  <!-- PROFILE UI -->
-  <div id="profileUI" class="hidden">
-    <h2>Your Profile</h2>
-    <input id="profileUsername" placeholder="Username"><br>
-    <input id="profileImage" type="file"><br>
+  <!-- PROFILE -->
+  <div id="profileUI" class="hidden profile-card">
+    <img id="profileAvatar" src="">
+    <h3 id="profileName"></h3>
     <p>Progress: <span id="profileProgress">0%</span></p>
 
+    <input id="newUsername" placeholder="New username">
+    <input id="newAvatar" type="file"><br>
+
     <button class="btn" onclick="saveProfile()">Save Profile</button>
-    <button class="btn secondary" onclick="deleteProfile()">Delete Account</button>
+    <button class="btn secondary" onclick="deleteProfile()">Delete Profile</button>
     <button class="btn secondary" onclick="logout()">Logout</button>
   </div>
+
 </section>
 
-<footer>© 2026 SATOSHI TEAM — Non-profit fan project</footer>
+<footer>© 2026 SATOSHI TEAM</footer>
 
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
@@ -239,139 +235,109 @@ const supabase = createClient(
   "sb_publishable_u_LaQ5HSQ1c8QgnFm290uA_wCZ7QphV"
 );
 
-// LOGIN
 window.login = async () => {
-  const { error, data } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value
   });
-  if(error) alert(error.message);
+  if (error) alert(error.message);
   else location.reload();
 };
 
-// REGISTER
 window.register = async () => {
-  const emailVal = regEmail.value;
-  const passwordVal = regPassword.value;
-  const playerNumber = String(Math.floor(Math.random() * 456) + 1).padStart(3,"0");
-
   const { error } = await supabase.auth.signUp({
-    email: emailVal,
-    password: passwordVal,
-    options: { data: { player_number: playerNumber } }
+    email: regEmail.value,
+    password: regPassword.value
   });
-  if(error) alert(error.message);
-  else alert(`Check your email to verify. Player number: ${playerNumber}`);
+  if (error) alert(error.message);
+  else alert("Check your email to verify.");
 };
 
-// LOGOUT
 window.logout = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
-// SAVE PROFILE
 window.saveProfile = async () => {
-  const { data: userData } = await supabase.auth.getUser();
-  const user = userData.user;
-  const username = document.getElementById("profileUsername").value;
-  const fileInput = document.getElementById("profileImage");
-  let imageUrl = null;
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if(fileInput.files.length > 0){
-    const file = fileInput.files[0];
-    const { data, error: uploadError } = await supabase
-      .storage
-      .from("profiles")
-      .upload(`avatars/${user.id}_${file.name}`, file, { upsert: true });
-    if(uploadError) { alert(uploadError.message); return; }
-    imageUrl = supabase.storage.from("profiles").getPublicUrl(data.path).publicUrl;
+  let avatarUrl = null;
+  if (newAvatar.files.length) {
+    const file = newAvatar.files[0];
+    const path = `${user.id}/${file.name}`;
+
+    await supabase.storage.from("profiles").upload(path, file, { upsert:true });
+    avatarUrl = supabase.storage.from("profiles").getPublicUrl(path).data.publicUrl;
   }
 
-  const { error } = await supabase.from("profiles").upsert([{ id: user.id, username, avatar: imageUrl }]);
-  if(error) alert(error.message);
-  else alert("Profile saved!");
+  await supabase.from("profiles").upsert({
+    id: user.id,
+    username: newUsername.value,
+    avatar: avatarUrl,
+    progress: "0%"
+  });
+
+  location.reload();
 };
 
-// DELETE PROFILE
 window.deleteProfile = async () => {
-  const confirmDelete = confirm("Are you sure you want to delete your account?");
-  if(!confirmDelete) return;
-  const { data: userData } = await supabase.auth.getUser();
-  const user = userData.user;
-  const { error } = await supabase.auth.admin.deleteUser(user.id);
-  if(error) alert(error.message);
-  else location.reload();
+  if (!confirm("Delete profile?")) return;
+  const { data:{user} } = await supabase.auth.getUser();
+  await supabase.from("profiles").delete().eq("id", user.id);
+  await supabase.auth.signOut();
+  location.reload();
 };
 
-// LOAD PROFILE IF LOGGED IN
-async function loadProfile(){
-  const { data: sessionData } = await supabase.auth.getSession();
-  if(sessionData.session && sessionData.session.user.email_confirmed_at){
-    authUI.classList.add("hidden");
-    profileUI.classList.remove("hidden");
-    const userId = sessionData.session.user.id;
-    const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
-    if(data){
-      profileUsername.value = data.username || "";
-      profileProgress.textContent = data.progress || "0%";
-    }
+const { data:{session} } = await supabase.auth.getSession();
+if (session) {
+  authUI.classList.add("hidden");
+  profileUI.classList.remove("hidden");
+
+  const { data } = await supabase.from("profiles")
+    .select("*").eq("id", session.user.id).single();
+
+  if (data) {
+    profileName.textContent = data.username || "Player";
+    profileProgress.textContent = data.progress || "0%";
+    if (data.avatar) profileAvatar.src = data.avatar;
   }
 }
-loadProfile();
 </script>
 
 <script>
-/* CLICK SOUND */
-const clickSound = document.getElementById("clickSound");
-document.addEventListener("click", e => {
-  if(e.target.classList.contains("btn")){
-    clickSound.currentTime = 0;
-    clickSound.play();
-  }
-});
-
-/* PAGE SWITCH */
 function switchPage(id){
-  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
 
-/* CAROUSEL DATA */
 const games = [
-  {img:"images/shot1.png", title:"Red Light, Green Light", desc:"Move at the wrong time & your eliminated."},
+  {img:"images/shot1.png", title:"Red Light, Green Light", desc:"Move at the wrong time & your eliminated!"},
   {img:"images/shot2.png", title:"Dalgona", desc:"Precision or death."},
   {img:"images/shot3.png", title:"Tug of War", desc:"Strength & teamwork."},
   {img:"images/shot4.png", title:"Marbles", desc:"Luck & strategy."},
-  {img:"images/shot5.png", title:"Glass Bridge", desc:"One wrong step, & your eliminated."},
+  {img:"images/shot5.png", title:"Glass Bridge", desc:"One wrong step & your eliminated!"},
   {img:"images/shot6.png", title:"Squid Game", desc:"The final showdown."},
-  {img:"images/shot7.png", title:"Pentathalon", desc:"Complete 5 games."},
-  {img:"images/shot8.png", title:"Mingle", desc:"Find the correct room."},
-  {img:"images/shot9.png", title:"Hide & Seek", desc:"Escape or die. Which will it be?"},
+  {img:"images/shot7.png", title:"Pentathalon", desc:"Complete the trials."},
+  {img:"images/shot8.png", title:"Mingle", desc:"Find the room."},
+  {img:"images/shot9.png", title:"Hide & Seek", desc:"Escape or die..."},
   {img:"images/shot10.png", title:"Jump Rope", desc:"Timing is everything."},
   {img:"images/shot11.png", title:"Sky Squid Game", desc:"High stakes finale."}
 ];
 
-let index = 0;
-const gameImg = document.getElementById("gameImg");
-const gameTitle = document.getElementById("gameTitle");
-const gameDesc = document.getElementById("gameDesc");
-
+let i=0;
 function renderGame(){
-  gameImg.src = games[index].img;
-  gameTitle.textContent = games[index].title;
-  gameDesc.textContent = games[index].desc;
+  gameImg.src=games[i].img;
+  gameTitle.textContent=games[i].title;
+  gameDesc.textContent=games[i].desc;
 }
 renderGame();
+function nextGame(){ i=(i+1)%games.length; renderGame(); }
+function prevGame(){ i=(i-1+games.length)%games.length; renderGame(); }
 
-function nextGame(){ index = (index+1) % games.length; renderGame(); }
-function prevGame(){ index = (index-1 + games.length) % games.length; renderGame(); }
-
-/* LOAD SCREEN FADE */
-window.addEventListener("load",()=>{
-  loadingScreen.style.opacity = 0;
+window.onload=()=>{
+  loadingScreen.style.opacity=0;
   setTimeout(()=>loadingScreen.remove(),800);
-});
+};
 </script>
 
 </body>

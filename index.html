@@ -200,13 +200,22 @@ iframe {
 }
 
 .skin-card {
-  min-width: 120px;
+  min-width: 180px;
   background: #141414;
   border: 1px solid #222;
   border-radius: 8px;
-  padding: 8px;
   text-align: center;
   position: relative;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skin-card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 8px;
 }
 
 .skin-rarity {
@@ -313,6 +322,18 @@ footer {
     <div class="revives">△ <span id="revivesAmount">0</span></div>
   </div>
 
+  <div>
+    <label for="langSelect">Language:</label>
+    <select id="langSelect" onchange="changeLanguage()">
+      <option value="en">English</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
+      <option value="ar">Arabic</option>
+      <option value="ru">Russian</option>
+      <option value="ko">Korean</option>
+    </select>
+  </div>
+
   <div class="shop-tabs">
     <div class="shop-tab active" onclick="switchShopTab('skins', this)">Skins</div>
     <div class="shop-tab" onclick="switchShopTab('emotes', this)">Emotes</div>
@@ -332,6 +353,10 @@ footer {
       <option value="exotic">Exotic</option>
       <option value="mythical">Mythical</option>
       <option value="wild">Wild</option>
+    </select>
+    <select id="collabFilter" onchange="renderSkins()">
+      <option value="">All</option>
+      <option value="true">Collab Only</option>
     </select>
     <div class="skin-grid" id="skinGrid"></div>
   </div>
@@ -476,16 +501,16 @@ window.addEventListener("load",()=>{
 
 /* SHOP DATA */
 const skinsData=[
-{name:"Seong Gi-hun",rarity:"common",color:"#1E90FF",collab:false,price:100},
-{name:"Cho Sang-woo",rarity:"common",color:"#1E90FF",collab:false,price:120},
-{name:"Kang Sae-byeok",rarity:"rare",color:"#FF0000",collab:false,price:200},
-{name:"Abdul Ali",rarity:"common",color:"#1E90FF",collab:false,price:110},
-{name:"Oh Il-nam",rarity:"special",color:"#00FF00",collab:false,price:500},
-{name:"Han Mi-nyeo",rarity:"rare",color:"#FF0000",collab:false,price:250},
-{name:"Jang Deok-su",rarity:"superrare",color:"#FF69B4",collab:false,price:400},
-{name:"Hwang Jun-ho",rarity:"mythical",color:"#800080",collab:false,price:1000},
-{name:"Movie Shadow",rarity:"exotic",color:"#FFD700",collab:true,price:1000},
-{name:"SpongeBob",rarity:"wild",color:"linear-gradient(45deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#4B0082,#8F00FF)",collab:true,price:2000}
+{name:"Seong Gi-hun",rarity:"common",color:"#1E90FF",collab:false,price:100,img:"images/skin1.png"},
+{name:"Cho Sang-woo",rarity:"common",color:"#1E90FF",collab:false,price:120,img:"images/skin2.png"},
+{name:"Kang Sae-byeok",rarity:"rare",color:"#FF0000",collab:false,price:200,img:"images/skin3.png"},
+{name:"Abdul Ali",rarity:"common",color:"#1E90FF",collab:false,price:110,img:"images/skin4.png"},
+{name:"Oh Il-nam",rarity:"special",color:"#50C878",collab:false,price:500,img:"images/skin5.png"},
+{name:"Han Mi-nyeo",rarity:"rare",color:"#FF0000",collab:false,price:250,img:"images/skin6.png"},
+{name:"Jang Deok-su",rarity:"superrare",color:"#FF69B4",collab:false,price:400,img:"images/skin7.png"},
+{name:"Hwang Jun-ho",rarity:"mythical",color:"#800080",collab:false,price:1000,img:"images/skin8.png"},
+{name:"Movie Shadow",rarity:"exotic",color:"#D4AF37",collab:true,price:1000,img:"images/skin9.png"},
+{name:"SpongeBob",rarity:"wild",color:"linear-gradient(45deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#4B0082,#8F00FF)",collab:true,price:2000,img:"images/skin10.png"}
 ];
 
 const emotesData=[
@@ -515,12 +540,20 @@ function renderSkins(){
   grid.innerHTML="";
   const search=document.getElementById("skinSearch").value.toLowerCase();
   const rarity=document.getElementById("rarityFilter").value;
+  const collab=document.getElementById("collabFilter").value;
   skinsData.forEach(skin=>{
-    if(skin.name.toLowerCase().includes(search) && (rarity==="" || skin.rarity===rarity)){
+    if(skin.name.toLowerCase().includes(search) && 
+       (rarity==="" || skin.rarity===rarity) &&
+       (collab==="" || skin.collab.toString()===collab)){
       const div=document.createElement("div");
       div.className="skin-card";
       div.style.background=skin.color;
-      div.innerHTML=`${skin.name}<br><span class="skin-rarity">${capitalize(skin.rarity)}</span><br>₩${skin.price}`;
+      div.innerHTML=`
+        <img src="${skin.img}" alt="${skin.name}">
+        <div>${skin.name}</div>
+        <span class="skin-rarity">${capitalize(skin.rarity)}</span>
+        <div>₩${skin.price}</div>
+      `;
       if(skin.collab){
         const badge=document.createElement("div");
         badge.className="collab-badge";
@@ -570,6 +603,11 @@ function switchShopTab(id, tab){
   tab.classList.add("active");
   document.querySelectorAll(".shop-content").forEach(c=>c.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+}
+
+function changeLanguage(){
+  const lang = document.getElementById("langSelect").value;
+  alert("Language switched to: " + lang);
 }
 
 /* INITIAL RENDER */

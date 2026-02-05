@@ -81,7 +81,7 @@ header img {
 /* SECTIONS + FADE */
 section {
   padding: 80px 20px;
-  max-width: 1100px;
+  max-width: 1200px; /* slightly bigger shop width */
   margin: auto;
   opacity: 1;
   transition: opacity 1.5s ease;
@@ -153,15 +153,15 @@ iframe {
   background: #141414;
   border: 1px solid #222;
   border-radius: 6px;
-  padding: 12px 16px;
+  padding: 8px 12px; /* smaller */
   margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
+  text-align: left;
+  font-size: 14px;
 }
 
 .revives {
-  color: #ff69b4;
+  color: #ff69b4; /* pink triangle */
+  font-weight: bold;
 }
 
 .shop-tabs {
@@ -206,11 +206,23 @@ iframe {
   border-radius: 8px;
   padding: 8px;
   text-align: center;
+  position: relative;
 }
 
 .skin-rarity {
   font-weight: bold;
   font-size: 12px;
+}
+
+.collab-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #ff3b3b;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 4px;
 }
 
 /* INPUTS */
@@ -298,7 +310,7 @@ footer {
 
   <div class="shop-info">
     <div>₩: <span id="wonAmount">0</span></div>
-    <div>△: <span id="revivesAmount" class="revives">0</span></div>
+    <div class="revives">△ <span id="revivesAmount">0</span></div>
   </div>
 
   <div class="shop-tabs">
@@ -464,13 +476,16 @@ window.addEventListener("load",()=>{
 
 /* SHOP DATA */
 const skinsData=[
-{name:"Skin 1",rarity:"common",color:"#1E90FF",collab:false,price:100},
-{name:"Skin 2",rarity:"rare",color:"#FF0000",collab:false,price:250},
-{name:"Skin 3",rarity:"superrare",color:"#FF69B4",collab:false,price:500},
-{name:"Skin 4",rarity:"special",color:"#00FF00",collab:false,price:750},
-{name:"Skin 5",rarity:"exotic",color:"#FFD700",collab:false,price:1000},
-{name:"Skin 6",rarity:"mythical",color:"#800080",collab:true,price:2000},
-{name:"Skin 7",rarity:"wild",color:"linear-gradient(45deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#4B0082,#8F00FF)",collab:true,price:5000}
+{name:"Seong Gi-hun",rarity:"common",color:"#1E90FF",collab:false,price:100},
+{name:"Cho Sang-woo",rarity:"common",color:"#1E90FF",collab:false,price:120},
+{name:"Kang Sae-byeok",rarity:"rare",color:"#FF0000",collab:false,price:200},
+{name:"Abdul Ali",rarity:"common",color:"#1E90FF",collab:false,price:110},
+{name:"Oh Il-nam",rarity:"special",color:"#00FF00",collab:false,price:500},
+{name:"Han Mi-nyeo",rarity:"rare",color:"#FF0000",collab:false,price:250},
+{name:"Jang Deok-su",rarity:"superrare",color:"#FF69B4",collab:false,price:400},
+{name:"Hwang Jun-ho",rarity:"mythical",color:"#800080",collab:false,price:1000},
+{name:"Movie Shadow",rarity:"exotic",color:"#FFD700",collab:true,price:1000},
+{name:"SpongeBob",rarity:"wild",color:"linear-gradient(45deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#4B0082,#8F00FF)",collab:true,price:2000}
 ];
 
 const emotesData=[
@@ -506,6 +521,12 @@ function renderSkins(){
       div.className="skin-card";
       div.style.background=skin.color;
       div.innerHTML=`${skin.name}<br><span class="skin-rarity">${capitalize(skin.rarity)}</span><br>₩${skin.price}`;
+      if(skin.collab){
+        const badge=document.createElement("div");
+        badge.className="collab-badge";
+        badge.textContent="Collab";
+        div.appendChild(badge);
+      }
       grid.appendChild(div);
     }
   });

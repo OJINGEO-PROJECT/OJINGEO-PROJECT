@@ -105,7 +105,14 @@ section {
 .media-grid {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:20px;
+  gap:30px;
+}
+.media-grid iframe {
+  width:100%;
+  aspect-ratio:16/9;
+  min-height:420px;
+  border-radius:12px;
+  border:none;
 }
 
 /* SHOP */
@@ -136,6 +143,16 @@ section {
   border:1px solid #222;
   border-radius:10px;
   padding:15px;
+}
+
+/* ACCOUNT */
+.account-box {
+  max-width:420px;
+  margin:40px auto;
+  background:#141414;
+  border:1px solid #222;
+  border-radius:12px;
+  padding:25px;
 }
 
 /* RARITIES */
@@ -242,6 +259,14 @@ footer {
 <section id="account" class="hidden">
   <h2>Account</h2>
   <p>Login to sync progress and unlock shop.</p>
+
+  <div class="account-box">
+    <h3>Player Profile</h3>
+    <p>Username: Guest</p>
+    <p>Progress: 0%</p>
+    <button class="btn">Save Profile</button>
+    <button class="btn secondary">Delete Profile</button>
+  </div>
 </section>
 
 <footer>© 2026 SATOSHI TEAM — Fan Project</footer>
@@ -268,26 +293,54 @@ function showShop(id){
   document.getElementById(id).classList.remove("hidden");
 }
 
+/* SHOP CONTENT */
+const shopData = {
+  skins: [
+    {name:"Pink Guard", rarity:"rare"},
+    {name:"Frontman Cloak", rarity:"mythical"}
+  ],
+  emotes: [
+    {name:"Bow", rarity:"common"},
+    {name:"Laugh", rarity:"rare"}
+  ],
+  powerups: [
+    {name:"Speed Boost", rarity:"special"}
+  ],
+  revives: [
+    {name:"Second Chance", rarity:"exotic"}
+  ]
+};
+
+Object.keys(shopData).forEach(cat=>{
+  const grid=document.getElementById(cat);
+  shopData[cat].forEach(item=>{
+    const div=document.createElement("div");
+    div.className="shop-item";
+    div.innerHTML=`<h4>${item.name}</h4><p class="${item.rarity}">${item.rarity.toUpperCase()}</p>`;
+    grid.appendChild(div);
+  });
+});
+
 /* GAMES */
 const games = [
-  { img:"images/shot1.png",  title:"Red Light, Green Light", desc:"Move at the wrong time." },
-  { img:"images/shot2.png",  title:"Dalgona", desc:"Precision or death." },
-  { img:"images/shot3.png",  title:"Tug of War", desc:"Strength and teamwork decide survival." },
-  { img:"images/shot4.png",  title:"Marbles", desc:"Luck, lies, and betrayal." },
-  { img:"images/shot5.png",  title:"Glass Bridge", desc:"One wrong step." },
-  { img:"images/shot6.png",  title:"Squid Game", desc:"The final showdown." },
-
-  /* Season / extra games */
-  { img:"images/shot7.png",  title:"Pentathlon", desc:"All games combined into one nightmare." },
-  { img:"images/shot8.png",  title:"Mingle", desc:"Find the right room—or die." },
-  { img:"images/shot9.png",  title:"Hide & Seek", desc:"Escape or be hunted." },
+  { img:"images/shot1.png", title:"Red Light, Green Light", desc:"Move at the wrong time." },
+  { img:"images/shot2.png", title:"Dalgona", desc:"Precision or death." },
+  { img:"images/shot3.png", title:"Tug of War", desc:"Strength and teamwork decide survival." },
+  { img:"images/shot4.png", title:"Marbles", desc:"Luck, lies, and betrayal." },
+  { img:"images/shot5.png", title:"Glass Bridge", desc:"One wrong step." },
+  { img:"images/shot6.png", title:"Squid Game", desc:"The final showdown." },
+  { img:"images/shot7.png", title:"Pentathlon", desc:"All games combined into one nightmare." },
+  { img:"images/shot8.png", title:"Mingle", desc:"Find the right room—or die." },
+  { img:"images/shot9.png", title:"Hide & Seek", desc:"Escape or be hunted." },
   { img:"images/shot10.png", title:"Jump Rope", desc:"Perfect timing is everything." },
   { img:"images/shot11.png", title:"Sky Squid Game", desc:"High-stakes finale above the void." }
 ];
+
 let index=0;
 const gameImg=document.getElementById("gameImg");
 const gameTitle=document.getElementById("gameTitle");
 const gameDesc=document.getElementById("gameDesc");
+
 function renderGame(){
   gameImg.src=games[index].img;
   gameTitle.textContent=games[index].title;

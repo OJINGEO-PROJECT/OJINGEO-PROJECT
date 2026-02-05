@@ -37,7 +37,7 @@ body {
   justify-content: center;
   font-size: 48px;
   z-index: 9999;
-  transition: opacity 0.8s ease;
+  transition: opacity 1.5s ease;
 }
 
 /* HEADER */
@@ -57,8 +57,9 @@ header img {
   top: 20px;
   right: 20px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .btn {
@@ -83,7 +84,7 @@ section {
   max-width: 1100px;
   margin: auto;
   opacity: 1;
-  transition: opacity .4s ease;
+  transition: opacity 1.5s ease;
 }
 
 .hidden {
@@ -148,32 +149,76 @@ iframe {
 }
 
 /* SHOP */
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 20px;
-  margin-top: 40px;
-}
-
-.shop-item {
+.shop-info {
   background: #141414;
   border: 1px solid #222;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
 }
 
-.locked {
-  opacity: .4;
-  pointer-events: none;
+.revives {
+  color: #ff69b4;
+}
+
+.shop-tabs {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.shop-tab {
+  padding: 10px 20px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #111;
+  color: #fff;
+}
+
+.shop-tab.active {
+  background: #ff3b3b;
+}
+
+.shop-content {
+  display: none;
+}
+
+.shop-content.active {
+  display: block;
+}
+
+.skin-grid {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.skin-card {
+  min-width: 120px;
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+}
+
+.skin-rarity {
+  font-weight: bold;
+  font-size: 12px;
 }
 
 /* INPUTS */
-input {
-  padding: 12px;
+input, select {
+  padding: 8px;
   margin: 6px;
   border-radius: 4px;
   border: none;
-  width: 260px;
 }
 
 /* FOOTER */
@@ -197,6 +242,7 @@ footer {
     <button class="btn secondary" onclick="switchPage('media')">Media</button>
     <button class="btn secondary" onclick="switchPage('shop')">Shop</button>
     <button class="btn secondary" onclick="switchPage('account')">Account</button>
+    <a class="btn" href="https://discord.gg/B2XjJYdwGM" target="_blank">Join Discord</a>
   </div>
 
   <img src="images/logo.png">
@@ -240,8 +286,8 @@ footer {
 <section id="media" class="hidden">
   <h2>Media</h2>
   <div class="media-grid">
-    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
-    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+    <iframe src="https://www.youtube.com/embed/sIyS_o_70-A"></iframe>
+    <iframe src="https://www.youtube.com/embed/fsFGFWvBnCw"></iframe>
   </div>
 </section>
 
@@ -250,11 +296,47 @@ footer {
   <h2>Shop</h2>
   <p id="shopNotice">Login required to purchase items.</p>
 
-  <div class="shop-grid" id="shopGrid">
-    <div class="shop-item"><h3>Player Skin</h3><p>Exclusive outfit</p><button class="btn">Buy</button></div>
-    <div class="shop-item"><h3>Emote</h3><p>Victory dance</p><button class="btn">Buy</button></div>
-    <div class="shop-item"><h3>Power-Up</h3><p>Speed boost</p><button class="btn">Buy</button></div>
-    <div class="shop-item"><h3>Revive</h3><p>One extra chance</p><button class="btn">Buy</button></div>
+  <div class="shop-info">
+    <div>₩: <span id="wonAmount">0</span></div>
+    <div>△: <span id="revivesAmount" class="revives">0</span></div>
+  </div>
+
+  <div class="shop-tabs">
+    <div class="shop-tab active" onclick="switchShopTab('skins', this)">Skins</div>
+    <div class="shop-tab" onclick="switchShopTab('emotes', this)">Emotes</div>
+    <div class="shop-tab" onclick="switchShopTab('powerups', this)">Power-Ups</div>
+    <div class="shop-tab" onclick="switchShopTab('revives', this)">Revives</div>
+  </div>
+
+  <!-- SKINS -->
+  <div id="skins" class="shop-content active">
+    <input type="text" id="skinSearch" placeholder="Search skins..." oninput="renderSkins()">
+    <select id="rarityFilter" onchange="renderSkins()">
+      <option value="">All rarities</option>
+      <option value="common">Common</option>
+      <option value="rare">Rare</option>
+      <option value="superrare">Super Rare</option>
+      <option value="special">Special</option>
+      <option value="exotic">Exotic</option>
+      <option value="mythical">Mythical</option>
+      <option value="wild">Wild</option>
+    </select>
+    <div class="skin-grid" id="skinGrid"></div>
+  </div>
+
+  <!-- EMOTES -->
+  <div id="emotes" class="shop-content">
+    <div class="skin-grid" id="emotesGrid"></div>
+  </div>
+
+  <!-- POWER-UPS -->
+  <div id="powerups" class="shop-content">
+    <div class="skin-grid" id="powerUpsGrid"></div>
+  </div>
+
+  <!-- REVIVES -->
+  <div id="revives" class="shop-content">
+    <div class="skin-grid" id="revivesGrid"></div>
   </div>
 </section>
 
@@ -347,17 +429,17 @@ function switchPage(id) {
 
 /* GAMES */
 const games=[
-{img:"images/shot1.png",title:"Red Light, Green Light",desc:"Move at the wrong time."},
-{img:"images/shot2.png",title:"Dalgona",desc:"Precision or death."},
-{img:"images/shot3.png",title:"Tug of War",desc:"Strength & teamwork."},
-{img:"images/shot4.png",title:"Marbles",desc:"Luck & strategy."},
-{img:"images/shot5.png",title:"Glass Bridge",desc:"One wrong step."},
-{img:"images/shot6.png",title:"Squid Game",desc:"Final showdown."},
-{img:"images/shot7.png",title:"Pentathalon",desc:"All games combined."},
-{img:"images/shot8.png",title:"Mingle",desc:"Find the room."},
-{img:"images/shot9.png",title:"Hide & Seek",desc:"Escape or die."},
-{img:"images/shot10.png",title:"Jump Rope",desc:"Perfect timing."},
-{img:"images/shot11.png",title:"Sky Squid Game",desc:"High stakes finale."}
+{img:"images/shot1.png",title:"Red Light, Green Light",desc:"If they catch you moving, you're going to be killed!"},
+{img:"images/shot2.png",title:"Dalgona",desc:"Carefully carve out the shape... Or be eliminated..."},
+{img:"images/shot3.png",title:"Tug of War",desc:"Tug of War needs more than just raw strength..."},
+{img:"images/shot4.png",title:"Marbles",desc:"We're Gganbu, aren't we?"},
+{img:"images/shot5.png",title:"Glass Bridge",desc:"One wrong step, and you're eliminated!"},
+{img:"images/shot6.png",title:"Squid Game",desc:"Only one can survive..."},
+{img:"images/shot7.png",title:"Pentathalon",desc:"A game consisted of five children's mini-games: Ddakji, Biseokchigi, Gonggi, Paengi, and Jegi..."},
+{img:"images/shot8.png",title:"Mingle",desc:"Work as a team & find a room..."},
+{img:"images/shot9.png",title:"Hide & Seek",desc:"Is it like the kids version? Do we just have to find them and then they're out?."},
+{img:"images/shot10.png",title:"Jump Rope",desc:"One your off... You won't come back..."},
+{img:"images/shot11.png",title:"Sky Squid Game",desc:"In the final game, all of you will get to choose which players will be eliminated..."}
 ];
 
 let index=0;
@@ -377,8 +459,103 @@ renderGame();
 /* LOAD */
 window.addEventListener("load",()=>{
   loadingScreen.style.opacity=0;
-  setTimeout(()=>loadingScreen.remove(),800);
+  setTimeout(()=>loadingScreen.remove(),1500);
 });
+
+/* SHOP DATA */
+const skinsData=[
+{name:"Skin 1",rarity:"common",color:"#1E90FF",collab:false,price:100},
+{name:"Skin 2",rarity:"rare",color:"#FF0000",collab:false,price:250},
+{name:"Skin 3",rarity:"superrare",color:"#FF69B4",collab:false,price:500},
+{name:"Skin 4",rarity:"special",color:"#00FF00",collab:false,price:750},
+{name:"Skin 5",rarity:"exotic",color:"#FFD700",collab:false,price:1000},
+{name:"Skin 6",rarity:"mythical",color:"#800080",collab:true,price:2000},
+{name:"Skin 7",rarity:"wild",color:"linear-gradient(45deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#4B0082,#8F00FF)",collab:true,price:5000}
+];
+
+const emotesData=[
+{name:"Dance 1",rarity:"common"},
+{name:"Dance 2",rarity:"rare"},
+{name:"Dance 3",rarity:"superrare"},
+{name:"Dance 4",rarity:"special"}
+];
+
+const powerUpsData=[
+{name:"Speed Boost"},
+{name:"Shield"},
+{name:"Double XP"}
+];
+
+const revivesData=[
+{name:"1 Revive"},
+{name:"Pack of 5 Revives"},
+{name:"Pack of 10 Revives"}
+];
+
+/* SHOP FUNCTIONS */
+function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+
+function renderSkins(){
+  const grid=document.getElementById("skinGrid");
+  grid.innerHTML="";
+  const search=document.getElementById("skinSearch").value.toLowerCase();
+  const rarity=document.getElementById("rarityFilter").value;
+  skinsData.forEach(skin=>{
+    if(skin.name.toLowerCase().includes(search) && (rarity==="" || skin.rarity===rarity)){
+      const div=document.createElement("div");
+      div.className="skin-card";
+      div.style.background=skin.color;
+      div.innerHTML=`${skin.name}<br><span class="skin-rarity">${capitalize(skin.rarity)}</span><br>₩${skin.price}`;
+      grid.appendChild(div);
+    }
+  });
+}
+
+function renderEmotes(){
+  const grid=document.getElementById("emotesGrid");
+  grid.innerHTML="";
+  emotesData.forEach(e=>{
+    const div=document.createElement("div");
+    div.className="skin-card";
+    div.innerHTML=`${e.name}<br><span class="skin-rarity">${capitalize(e.rarity)}</span>`;
+    grid.appendChild(div);
+  });
+}
+
+function renderPowerUps(){
+  const grid=document.getElementById("powerUpsGrid");
+  grid.innerHTML="";
+  powerUpsData.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="skin-card";
+    div.innerText=p.name;
+    grid.appendChild(div);
+  });
+}
+
+function renderRevives(){
+  const grid=document.getElementById("revivesGrid");
+  grid.innerHTML="";
+  revivesData.forEach(r=>{
+    const div=document.createElement("div");
+    div.className="skin-card";
+    div.innerText=r.name;
+    grid.appendChild(div);
+  });
+}
+
+function switchShopTab(id, tab){
+  document.querySelectorAll(".shop-tab").forEach(t=>t.classList.remove("active"));
+  tab.classList.add("active");
+  document.querySelectorAll(".shop-content").forEach(c=>c.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* INITIAL RENDER */
+renderSkins();
+renderEmotes();
+renderPowerUps();
+renderRevives();
 </script>
 
 </body>

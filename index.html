@@ -338,7 +338,6 @@ footer {
     <div class="shop-tab" onclick="switchShopTab('revives', this)">Revives</div>
   </div>
 
-  <!-- SKINS -->
   <div id="skins" class="shop-content active">
     <input type="text" id="skinSearch" placeholder="Search skins..." oninput="renderSkins()">
     <select id="rarityFilter" onchange="renderSkins()">
@@ -358,17 +357,14 @@ footer {
     <div class="skin-grid" id="skinGrid"></div>
   </div>
 
-  <!-- EMOTES -->
   <div id="emotes" class="shop-content">
     <div class="skin-grid" id="emotesGrid"></div>
   </div>
 
-  <!-- POWER-UPS -->
   <div id="powerups" class="shop-content">
     <div class="skin-grid" id="powerUpsGrid"></div>
   </div>
 
-  <!-- REVIVES -->
   <div id="revives" class="shop-content">
     <div class="skin-grid" id="revivesGrid"></div>
   </div>
@@ -427,16 +423,6 @@ window.logout = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
-
-const { data } = await supabase.auth.getSession();
-if (data.session) {
-  authUI.classList.add("hidden");
-  profileUI.classList.remove("hidden");
-  shopGrid.classList.remove("locked");
-  shopNotice.style.display = "none";
-} else {
-  shopGrid.classList.add("locked");
-}
 </script>
 
 <script>
@@ -449,7 +435,7 @@ document.addEventListener("click", e => {
   }
 });
 
-/* FADE PAGE SWITCH */
+/* PAGE SWITCH */
 function switchPage(id) {
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   setTimeout(()=>document.getElementById(id).classList.remove("hidden"),10);
@@ -482,7 +468,6 @@ function renderGame(){
 }
 function nextGame(){index=(index+1)%games.length;renderGame();}
 function prevGame(){index=(index-1+games.length)%games.length;renderGame();}
-renderGame();
 
 /* SHOP DATA */
 const skinsData=[
@@ -611,10 +596,18 @@ function changeLanguage(){
 }
 
 /* INITIAL RENDER */
+renderGame();
 renderSkins();
 renderEmotes();
 renderPowerUps();
 renderRevives();
+
+/* HIDE LOADING SCREEN AFTER LOAD */
+window.addEventListener("load", () => {
+  const loading = document.getElementById("loadingScreen");
+  loading.style.opacity = "0";
+  setTimeout(() => loading.style.display = "none", 1500);
+});
 </script>
 
 </body>

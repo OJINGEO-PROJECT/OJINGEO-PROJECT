@@ -5,233 +5,380 @@
 <title>OJINGEO PROJECT</title>
 
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <style>
 @font-face {
   font-family: "SquidFont";
   src: url("fonts/squid.ttf") format("truetype");
+  font-display: swap;
 }
 
-* { box-sizing: border-box; font-family: "SquidFont"; }
+* {
+  font-family: "SquidFont" !important;
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  background:#0f0f0f;
-  color:white;
+  background: #0f0f0f;
+  color: #fff;
+  text-align: center;
 }
 
-/* NAV TOP RIGHT */
+/* LOADING */
+#loadingScreen {
+  position: fixed;
+  inset: 0;
+  background: #0f0f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
+}
+
+/* HEADER */
 header {
-  padding:40px;
-  background:radial-gradient(circle at top,#1a1a1a,#000);
-  position:relative;
+  padding: 80px 20px 60px;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  position: relative;
 }
 
-.nav {
-  position:absolute;
-  top:20px;
-  right:20px;
-  display:flex;
-  gap:10px;
+header img {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .btn {
-  padding:12px 22px;
-  background:#ff3b3b;
-  border:none;
-  border-radius:6px;
-  color:white;
-  cursor:pointer;
+  padding: 14px 28px;
+  background: #ff3b3b;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 6px;
+  font-size: 16px;
 }
 
 .btn.secondary {
-  background:#222;
-  border:1px solid #444;
+  background: #222;
+  border: 1px solid #444;
 }
 
+/* SECTIONS + FADE */
 section {
-  padding:80px 20px;
-  max-width:1100px;
-  margin:auto;
+  padding: 80px 20px;
+  max-width: 1100px;
+  margin: auto;
+  opacity: 1;
+  transition: opacity .4s ease;
 }
 
 .hidden {
-  display:none;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: -9999px;
+}
+
+/* CAROUSEL */
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.arrow {
+  font-size: 42px;
+  background: none;
+  border: none;
+  color: #ff3b3b;
+  cursor: pointer;
+}
+
+.card {
+  background: #141414;
+  border-radius: 10px;
+  padding: 25px;
+  border: 1px solid #222;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+/* GAME MODES */
+.game-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 40px;
+  text-align: left;
 }
 
 /* MEDIA */
 .media-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 20px;
+  margin-top: 40px;
 }
 
-.media-grid iframe {
-  width:100%;
-  height:420px;
-  border:none;
-  border-radius:12px;
+iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  border: none;
 }
 
 /* SHOP */
-.shop-controls {
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-}
-
-.shop-controls input,
-.shop-controls select {
-  padding:10px;
-  background:#111;
-  color:white;
-  border:1px solid #333;
-  border-radius:6px;
-}
-
 .shop-grid {
-  max-height:420px;
-  overflow-y:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px;
+  margin-top: 40px;
 }
 
 .shop-item {
-  background:#141414;
-  border:1px solid #222;
-  border-radius:10px;
-  padding:15px;
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 20px;
 }
 
-/* ACCOUNT */
-.account-box {
-  max-width:420px;
-  margin:auto;
-  background:#141414;
-  padding:25px;
-  border-radius:12px;
+.locked {
+  opacity: .4;
+  pointer-events: none;
 }
 
-/* RARITIES */
-.common{color:#7ad7ff}
-.rare{color:#ff4b4b}
-.superrare{color:#ff5fd2}
-.special{color:#5fff7a}
-.exotic{color:gold}
-.mythical{color:#b36bff}
+/* INPUTS */
+input {
+  padding: 12px;
+  margin: 6px;
+  border-radius: 4px;
+  border: none;
+  width: 260px;
+}
+
+/* FOOTER */
+footer {
+  padding: 40px 20px;
+  background: #000;
+  opacity: 0.6;
+}
 </style>
 </head>
 
 <body>
 
+<div id="loadingScreen">LOADING…</div>
+<audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
+
 <header>
-  <div class="nav">
+  <div class="top-right-buttons">
     <button class="btn secondary" onclick="switchPage('home')">Home</button>
+    <button class="btn secondary" onclick="switchPage('manual')">Manual</button>
     <button class="btn secondary" onclick="switchPage('media')">Media</button>
     <button class="btn secondary" onclick="switchPage('shop')">Shop</button>
     <button class="btn secondary" onclick="switchPage('account')">Account</button>
   </div>
 
-  <img src="images/logo.png" width="300">
+  <img src="images/logo.png">
+  <p>Survive twisted childhood games. One winner.</p>
+
+  <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">
+    Play on itch.io
+  </a>
 </header>
 
+<!-- HOME -->
 <section id="home">
-  <h2>Welcome to OJINGEO PROJECT</h2>
+  <h2>Games (Season 1–3)</h2>
+
+  <div class="carousel">
+    <button class="arrow" onclick="prevGame()">◀</button>
+    <div class="card">
+      <img id="gameImg">
+      <h3 id="gameTitle"></h3>
+      <p id="gameDesc"></p>
+    </div>
+    <button class="arrow" onclick="nextGame()">▶</button>
+  </div>
+
+  <h2 style="margin-top:80px;">Game Modes</h2>
+  <div class="game-modes">
+    <div class="card"><h3>Frontman Mode</h3><p>Control the games. Enforce the rules.</p></div>
+    <div class="card"><h3>Guard Mode</h3><p>Serve the organization. Eliminate players.</p></div>
+    <div class="card"><h3>Multiplayer Mode</h3><p>Up to 100 players worldwide.</p></div>
+    <div class="card"><h3>Jun-ho Files</h3><p>Investigate the island.</p></div>
+  </div>
 </section>
 
+<!-- MANUAL -->
+<section id="manual" class="hidden">
+  <h2>Manual</h2>
+  <p>Follow the rules. Fail and you are eliminated.</p>
+</section>
+
+<!-- MEDIA -->
 <section id="media" class="hidden">
   <h2>Media</h2>
   <div class="media-grid">
-    <iframe src="https://www.youtube.com/embed/sIyS_o_70-A"></iframe>
-    <iframe src="https://www.youtube.com/embed/fsFGFWvBnCw"></iframe>
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
   </div>
 </section>
 
+<!-- SHOP -->
 <section id="shop" class="hidden">
   <h2>Shop</h2>
+  <p id="shopNotice">Login required to purchase items.</p>
 
-  <div class="shop-controls">
-    <input id="search" placeholder="Search skins">
-    <select id="filter">
-      <option value="">All rarities</option>
-      <option value="common">Common</option>
-      <option value="rare">Rare</option>
-      <option value="mythical">Mythical</option>
-    </select>
+  <div class="shop-grid" id="shopGrid">
+    <div class="shop-item"><h3>Player Skin</h3><p>Exclusive outfit</p><button class="btn">Buy</button></div>
+    <div class="shop-item"><h3>Emote</h3><p>Victory dance</p><button class="btn">Buy</button></div>
+    <div class="shop-item"><h3>Power-Up</h3><p>Speed boost</p><button class="btn">Buy</button></div>
+    <div class="shop-item"><h3>Revive</h3><p>One extra chance</p><button class="btn">Buy</button></div>
   </div>
-
-  <div id="shopGrid" class="shop-grid"></div>
 </section>
 
+<!-- ACCOUNT -->
 <section id="account" class="hidden">
-  <h2>Account</h2>
 
-  <div class="account-box">
-    <input id="email" placeholder="Email"><br><br>
-    <input id="password" type="password" placeholder="Password"><br><br>
-    <button class="btn" onclick="login()">Login / Register</button>
-    <p id="userStatus">Not logged in</p>
+  <div id="authUI">
+    <h2>Account</h2>
+    <input id="email" placeholder="Email">
+    <input id="password" type="password"><br>
+    <button class="btn" onclick="login()">Login</button>
+
+    <hr style="opacity:.2; margin:40px 0;">
+
+    <input id="regEmail" placeholder="Email">
+    <input id="regPassword" type="password"><br>
+    <button class="btn" onclick="register()">Create Account</button>
+
+    <div class="card" style="margin-top:40px;">
+      <h3>Why create & link an account?</h3>
+      <p>• Save progress<br>• Unlock shop items<br>• Sync with the game<br>• Access exclusive content</p>
+    </div>
+  </div>
+
+  <div id="profileUI" class="hidden">
+    <h2>Your Profile</h2>
+    <p>Progress: 0%</p>
+    <button class="btn">Link Account to Game</button>
+
+    <div class="card" style="margin-top:30px;">
+      <h3>Account Benefits</h3>
+      <p>Progress syncing, cosmetics, rewards, early access.</p>
+    </div>
+
+    <button class="btn secondary" onclick="logout()">Logout</button>
   </div>
 </section>
 
-<script>
-/* PAGE SWITCH */
-function switchPage(id){
-  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-}
+<footer>© 2026 SATOSHI TEAM — Non-profit fan project</footer>
 
-/* SUPABASE */
-const supabase = supabasejs.createClient(
-  "SUPABASE_URL",
-  "SUPABASE_ANON_KEY"
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://wodzqfuxxpewrvqyedqu.supabase.co",
+  "sb_publishable_u_LaQ5HSQ1c8QgnFm290uA_wCZ7QphV"
 );
 
-async function login(){
-  const email=document.getElementById("email").value;
-  const password=document.getElementById("password").value;
+window.login = async () => {
+  const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
+  if (!error) location.reload();
+};
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,password
-  });
+window.register = async () => {
+  await supabase.auth.signUp({ email: regEmail.value, password: regPassword.value });
+  alert("Verify your email.");
+};
 
-  if(error){
-    await supabase.auth.signUp({ email,password });
+window.logout = async () => {
+  await supabase.auth.signOut();
+  location.reload();
+};
+
+const { data } = await supabase.auth.getSession();
+if (data.session) {
+  authUI.classList.add("hidden");
+  profileUI.classList.remove("hidden");
+  shopGrid.classList.remove("locked");
+  shopNotice.style.display = "none";
+} else {
+  shopGrid.classList.add("locked");
+}
+</script>
+
+<script>
+/* SFX */
+const clickSound = document.getElementById("clickSound");
+document.addEventListener("click", e => {
+  if (e.target.closest(".btn")) {
+    clickSound.currentTime = 0;
+    clickSound.play().catch(()=>{});
   }
+});
 
-  document.getElementById("userStatus").innerText="Logged in";
+/* FADE PAGE SWITCH */
+function switchPage(id) {
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  setTimeout(()=>document.getElementById(id).classList.remove("hidden"),10);
 }
 
-/* SHOP DATA */
-const items=[
-  {name:"Pink Guard",rarity:"rare",benefit:"+5% XP"},
-  {name:"Frontman Cloak",rarity:"mythical",benefit:"+10% authority"},
-  {name:"VIP Mask",rarity:"exotic",benefit:"Exclusive access"}
+/* GAMES */
+const games=[
+{img:"images/shot1.png",title:"Red Light, Green Light",desc:"Move at the wrong time."},
+{img:"images/shot2.png",title:"Dalgona",desc:"Precision or death."},
+{img:"images/shot3.png",title:"Tug of War",desc:"Strength & teamwork."},
+{img:"images/shot4.png",title:"Marbles",desc:"Luck & strategy."},
+{img:"images/shot5.png",title:"Glass Bridge",desc:"One wrong step."},
+{img:"images/shot6.png",title:"Squid Game",desc:"Final showdown."},
+{img:"images/shot7.png",title:"Pentathalon",desc:"All games combined."},
+{img:"images/shot8.png",title:"Mingle",desc:"Find the room."},
+{img:"images/shot9.png",title:"Hide & Seek",desc:"Escape or die."},
+{img:"images/shot10.png",title:"Jump Rope",desc:"Perfect timing."},
+{img:"images/shot11.png",title:"Sky Squid Game",desc:"High stakes finale."}
 ];
 
-const grid=document.getElementById("shopGrid");
-const search=document.getElementById("search");
-const filter=document.getElementById("filter");
+let index=0;
+const gameImg=document.getElementById("gameImg");
+const gameTitle=document.getElementById("gameTitle");
+const gameDesc=document.getElementById("gameDesc");
 
-function renderShop(){
-  grid.innerHTML="";
-  items.filter(i=>
-    i.name.toLowerCase().includes(search.value.toLowerCase()) &&
-    (!filter.value || i.rarity===filter.value)
-  ).forEach(i=>{
-    grid.innerHTML+=`
-      <div class="shop-item">
-        <h3 class="${i.rarity}">${i.name}</h3>
-        <p>${i.benefit}</p>
-      </div>`;
-  });
+function renderGame(){
+  gameImg.src=games[index].img;
+  gameTitle.textContent=games[index].title;
+  gameDesc.textContent=games[index].desc;
 }
-search.oninput=filter.onchange=renderShop;
-renderShop();
+function nextGame(){index=(index+1)%games.length;renderGame();}
+function prevGame(){index=(index-1+games.length)%games.length;renderGame();}
+renderGame();
+
+/* LOAD */
+window.addEventListener("load",()=>{
+  loadingScreen.style.opacity=0;
+  setTimeout(()=>loadingScreen.remove(),800);
+});
 </script>
 
 </body>

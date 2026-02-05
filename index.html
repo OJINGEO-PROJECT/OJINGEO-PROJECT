@@ -11,155 +11,151 @@
 @font-face {
   font-family: "SquidFont";
   src: url("fonts/squid.ttf") format("truetype");
-  font-display: swap;
 }
 
-* {
-  font-family: "SquidFont";
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; font-family: "SquidFont"; }
 
 body {
   margin: 0;
-  background: #0f0f0f;
-  color: #fff;
-  text-align: center;
+  background:#0f0f0f;
+  color:white;
+  text-align:center;
 }
 
 /* LOADING */
 #loadingScreen {
-  position: fixed;
-  inset: 0;
-  background: #0f0f0f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  z-index: 9999;
-  transition: opacity 0.8s ease;
+  position:fixed;
+  inset:0;
+  background:#0f0f0f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  z-index:9999;
+  transition:opacity 1.5s ease;
 }
 
 /* HEADER */
 header {
-  padding: 80px 20px 60px;
-  background: radial-gradient(circle at top, #1a1a1a, #000);
+  padding:80px 20px 60px;
+  background:radial-gradient(circle at top,#1a1a1a,#000);
 }
 
-header img {
-  width: 300px;
-}
-
-/* TOP NAV */
-.top-right-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 40px;
+.nav {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:40px;
 }
 
 .btn {
-  padding: 14px 28px;
-  background: #ff3b3b;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
+  padding:14px 26px;
+  background:#ff3b3b;
+  border:none;
+  border-radius:6px;
+  color:white;
+  cursor:pointer;
 }
 
 .btn.secondary {
-  background: #222;
-  border: 1px solid #444;
+  background:#222;
+  border:1px solid #444;
 }
 
 /* SECTIONS */
 section {
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: auto;
-  opacity: 1;
-  transition: opacity 0.8s ease;
+  padding:80px 20px;
+  max-width:1100px;
+  margin:auto;
+  opacity:1;
+  transition:opacity 1.5s ease;
 }
 
 .hidden {
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  left: -9999px;
+  opacity:0;
+  pointer-events:none;
+  position:absolute;
+  left:-9999px;
 }
 
-/* CARDS */
+/* CAROUSEL */
+.carousel {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+}
+
+.arrow {
+  font-size:40px;
+  background:none;
+  border:none;
+  color:#ff3b3b;
+  cursor:pointer;
+}
+
 .card {
-  background: #141414;
-  border-radius: 10px;
-  padding: 25px;
-  border: 1px solid #222;
-  margin: 20px auto;
-  max-width: 600px;
+  background:#141414;
+  border:1px solid #222;
+  border-radius:10px;
+  padding:25px;
 }
 
 /* MEDIA */
 .media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 20px;
-}
-
-iframe {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 10px;
-  border: none;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;
 }
 
 /* SHOP */
-.shop-header-box {
-  background: #141414;
-  border: 1px solid #222;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
+.shop-wallet {
+  background:#111;
+  border:1px solid #333;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:20px;
+  text-align:left;
 }
 
-.currency { font-size: 22px; }
-.revive { color: #ff3b9a; }
-
 .shop-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:30px;
 }
 
 .shop-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-/* RARITY */
-.common { border-color:#7fd3ff }
-.rare { border-color:#ff4d4d }
-.super { border-color:#ff3b9a }
-.special { border-color:#4dff88 }
-.exotic { border-color:gold }
-.mythical { border-color:#a855f7 }
-.wild {
-  border: 2px solid;
-  border-image: linear-gradient(45deg, red, orange, yellow, green, blue, purple) 1;
+.shop-item {
+  background:#141414;
+  border:1px solid #222;
+  border-radius:10px;
+  padding:15px;
 }
 
-input, select {
-  padding: 10px;
-  margin: 5px;
-  border-radius: 4px;
-  border: none;
+/* RARITIES */
+.common{color:#7ad7ff}
+.rare{color:#ff4b4b}
+.superrare{color:#ff5fd2}
+.special{color:#5fff7a}
+.exotic{color:gold}
+.mythical{color:#b36bff}
+.wild{
+  background:linear-gradient(90deg,red,orange,yellow,green,cyan,blue,purple);
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
+/* FOOTER */
 footer {
-  padding: 40px;
-  background: #000;
-  opacity: .6;
+  padding:40px;
+  background:black;
+  opacity:.6;
 }
 </style>
 </head>
@@ -167,9 +163,10 @@ footer {
 <body>
 
 <div id="loadingScreen">LOADING…</div>
+<audio id="clickSound" src="sounds/click.mp3"></audio>
 
 <header>
-  <div class="top-right-buttons">
+  <div class="nav">
     <button class="btn secondary" onclick="switchPage('home')">Home</button>
     <button class="btn secondary" onclick="switchPage('manual')">Manual</button>
     <button class="btn secondary" onclick="switchPage('media')">Media</button>
@@ -177,27 +174,37 @@ footer {
     <button class="btn secondary" onclick="switchPage('account')">Account</button>
   </div>
 
-  <img src="images/logo.png">
+  <img src="images/logo.png" width="300">
   <p>Survive twisted childhood games. One winner.</p>
+
+  <a class="btn" href="https://satoshiteam.itch.io/ojingeo-project" target="_blank">Play on itch.io</a>
 </header>
 
 <!-- HOME -->
 <section id="home">
-  <h2>Welcome</h2>
-  <div class="card">
-    <p>OJINGEO PROJECT is a non-profit Squid Game fan experience.<br>
-    Survive, compete, and win.</p>
+  <h2>Games</h2>
+
+  <div class="carousel">
+    <button class="arrow" onclick="prevGame()">◀</button>
+    <div class="card">
+      <img id="gameImg" width="100%">
+      <h3 id="gameTitle"></h3>
+      <p id="gameDesc"></p>
+    </div>
+    <button class="arrow" onclick="nextGame()">▶</button>
   </div>
+
+  <h2 style="margin-top:80px;">Game Modes</h2>
+  <div class="card"><h3>Frontman</h3><p>Control the games and fate.</p></div>
+  <div class="card"><h3>Guard</h3><p>Enforce the rules.</p></div>
+  <div class="card"><h3>Multiplayer</h3><p>Up to 100 players.</p></div>
+  <div class="card"><h3>Jun-ho Files</h3><p>Investigate the island.</p></div>
 </section>
 
 <!-- MANUAL -->
 <section id="manual" class="hidden">
   <h2>Manual</h2>
-  <div class="card">
-    <p>• Follow the rules<br>
-       • Fail = elimination<br>
-       • Winning requires skill, luck, and sacrifice</p>
-  </div>
+  <p>Fail the rules. You are eliminated.</p>
 </section>
 
 <!-- MEDIA -->
@@ -211,91 +218,89 @@ footer {
 
 <!-- SHOP -->
 <section id="shop" class="hidden">
+  <h2>Shop</h2>
 
-  <div class="shop-header-box">
-    <div class="currency">₩: 0</div>
-    <div class="currency revive">△: 0</div>
+  <div class="shop-wallet">
+    ₩: 0<br>
+    <span style="color:#ff5fd2;">△: 0</span>
   </div>
 
   <div class="shop-tabs">
-    <button class="btn secondary" onclick="openShopTab('skins')">Skins</button>
-    <button class="btn secondary" onclick="openShopTab('emotes')">Emotes</button>
-    <button class="btn secondary" onclick="openShopTab('powerups')">Power Ups</button>
-    <button class="btn secondary" onclick="openShopTab('revives')">Revives</button>
+    <button class="btn secondary" onclick="showShop('skins')">Skins</button>
+    <button class="btn secondary" onclick="showShop('emotes')">Emotes</button>
+    <button class="btn secondary" onclick="showShop('powerups')">Power-Ups</button>
+    <button class="btn secondary" onclick="showShop('revives')">Revives</button>
   </div>
 
-  <div id="skins" class="shop-tab">
-    <input placeholder="Search skins">
-    <select>
-      <option>All Rarities</option>
-      <option>Common</option>
-      <option>Rare</option>
-      <option>Super Rare</option>
-      <option>Special</option>
-      <option>Exotic</option>
-      <option>Mythical</option>
-      <option>Wild</option>
-    </select>
-
-    <div class="shop-grid">
-      <div class="card common">Common Skin</div>
-      <div class="card rare">Rare Skin</div>
-      <div class="card super">Super Rare Skin</div>
-      <div class="card special">Special Skin</div>
-      <div class="card exotic">Exotic Skin</div>
-      <div class="card mythical">Mythical Skin</div>
-      <div class="card wild">Wild Skin</div>
-    </div>
-  </div>
-
-  <div id="emotes" class="shop-tab hidden">
-    <div class="shop-grid">
-      <div class="card rare">Dance Emote</div>
-      <div class="card super">Victory Emote</div>
-    </div>
-  </div>
-
-  <div id="powerups" class="shop-tab hidden">
-    <div class="shop-grid">
-      <div class="card">Speed Boost</div>
-      <div class="card">Shield</div>
-    </div>
-  </div>
-
-  <div id="revives" class="shop-tab hidden">
-    <div class="shop-grid">
-      <div class="card">△ x1</div>
-      <div class="card">△ x5</div>
-      <div class="card">△ x10</div>
-    </div>
-  </div>
-
+  <div id="skins" class="shop-grid"></div>
+  <div id="emotes" class="shop-grid hidden"></div>
+  <div id="powerups" class="shop-grid hidden"></div>
+  <div id="revives" class="shop-grid hidden"></div>
 </section>
 
 <!-- ACCOUNT -->
 <section id="account" class="hidden">
   <h2>Account</h2>
-  <div class="card">
-    <p>Account system coming online.</p>
-  </div>
+  <p>Login to sync progress and unlock shop.</p>
 </section>
 
-<footer>© 2026 SATOSHI TEAM</footer>
+<footer>© 2026 SATOSHI TEAM — Fan Project</footer>
 
 <script>
+const clickSound=document.getElementById("clickSound");
+document.addEventListener("click",e=>{
+  if(e.target.closest(".btn")){
+    clickSound.currentTime=0;
+    clickSound.play().catch(()=>{});
+  }
+});
+
 function switchPage(id){
   document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
-  setTimeout(()=>document.getElementById(id).classList.remove("hidden"),50);
+  setTimeout(()=>document.getElementById(id).classList.remove("hidden"),20);
 }
 
-function openShopTab(id){
-  document.querySelectorAll(".shop-tab").forEach(t=>t.classList.add("hidden"));
+/* SHOP TABS */
+function showShop(id){
+  ["skins","emotes","powerups","revives"].forEach(s=>{
+    document.getElementById(s).classList.add("hidden");
+  });
   document.getElementById(id).classList.remove("hidden");
 }
 
+/* GAMES */
+const games = [
+  { img:"images/shot1.png",  title:"Red Light, Green Light", desc:"Move at the wrong time." },
+  { img:"images/shot2.png",  title:"Dalgona", desc:"Precision or death." },
+  { img:"images/shot3.png",  title:"Tug of War", desc:"Strength and teamwork decide survival." },
+  { img:"images/shot4.png",  title:"Marbles", desc:"Luck, lies, and betrayal." },
+  { img:"images/shot5.png",  title:"Glass Bridge", desc:"One wrong step." },
+  { img:"images/shot6.png",  title:"Squid Game", desc:"The final showdown." },
+
+  /* Season / extra games */
+  { img:"images/shot7.png",  title:"Pentathlon", desc:"All games combined into one nightmare." },
+  { img:"images/shot8.png",  title:"Mingle", desc:"Find the right room—or die." },
+  { img:"images/shot9.png",  title:"Hide & Seek", desc:"Escape or be hunted." },
+  { img:"images/shot10.png", title:"Jump Rope", desc:"Perfect timing is everything." },
+  { img:"images/shot11.png", title:"Sky Squid Game", desc:"High-stakes finale above the void." }
+];
+let index=0;
+const gameImg=document.getElementById("gameImg");
+const gameTitle=document.getElementById("gameTitle");
+const gameDesc=document.getElementById("gameDesc");
+function renderGame(){
+  gameImg.src=games[index].img;
+  gameTitle.textContent=games[index].title;
+  gameDesc.textContent=games[index].desc;
+}
+function nextGame(){index=(index+1)%games.length;renderGame();}
+function prevGame(){index=(index-1+games.length)%games.length;renderGame();}
+renderGame();
+
+/* LOAD */
 window.addEventListener("load",()=>{
   loadingScreen.style.opacity=0;
-  setTimeout(()=>loadingScreen.remove(),800);
+  setTimeout(()=>loadingScreen.remove(),1500);
 });
 </script>
 

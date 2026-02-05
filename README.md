@@ -12,3 +12,5 @@ Added a new media page for trailers, more screenshots, e.t.c.
 Brought back the smooth fade transition between switching the pages.
 Brought back the "Link Account to game" button.
 Added a new benefits area to showcase the benefits of linking your OJINGEO account to OJINGEO PROJECT.
+
+Please note my coding skills aren't perfect, so things may be removed accidently as i keep updating this.

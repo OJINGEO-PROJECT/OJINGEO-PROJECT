@@ -416,7 +416,8 @@ const supabase = createClient(
   "https://rqshkyiggycfypilcmzk.supabase.co",
   "sb_publishable_Tn7XLKoh21eS673C0oZDwQ_5NgLMthf"
 );
-  
+
+let currentLang = document.getElementById("langSelect").value || "en";
 let currentLang = "en"; 
 
 async function init() {

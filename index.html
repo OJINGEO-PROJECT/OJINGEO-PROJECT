@@ -421,25 +421,43 @@ let currentLang = document.getElementById("langSelect").value || "en";
 let currentLang = "en"; 
 
 async function init() {
-  // Supabase session check
-  const { data } = await supabase.auth.getSession();
-  if (data.session) {
-    document.getElementById("authUI").classList.add("hidden");
-    document.getElementById("profileUI").classList.remove("hidden");
-    document.getElementById("shopNotice").style.display = "none";
-  }
-
-  // Render everything
-  renderGame();
-  renderSkins();
-  renderEmotes();
-  renderPowerUps();
-  renderRevives();
-
-  // Hide loading screen
   const loading = document.getElementById("loadingScreen");
-  loading.style.opacity = "0";
-  setTimeout(() => loading.style.display = "none", 500);
+
+  // Ensure loading screen shows immediately
+  loading.style.display = "flex";
+  loading.style.opacity = "1";
+
+  // Start a timeout in case Supabase hangs
+  const fallbackTimeout = setTimeout(() => {
+    loading.style.opacity = "0";
+    setTimeout(() => loading.style.display = "none", 500);
+  }, 5000); // 5 seconds max wait
+
+  try {
+    // Supabase session check
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      document.getElementById("authUI").classList.add("hidden");
+      document.getElementById("profileUI").classList.remove("hidden");
+      document.getElementById("shopNotice").style.display = "none";
+    }
+
+    // Render everything
+    renderGame();
+    renderSkins();
+    renderEmotes();
+    renderPowerUps();
+    renderRevives();
+  } catch (e) {
+    console.error("Init error:", e);
+  } finally {
+    // Clear fallback if finished early
+    clearTimeout(fallbackTimeout);
+
+    // Hide loading screen smoothly
+    loading.style.opacity = "0";
+    setTimeout(() => loading.style.display = "none", 500);
+  }
 }
 
 // Login/Register/Logout functions

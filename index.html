@@ -504,6 +504,7 @@ const translations = {
     skinsTab: "Skins",
     emotesTab: "Émotes",
     powerupsTab: "Bonus",
+    searchPlaceholder:"Rechercher des skins...",
     revivesTab: "Vies"
   },
   es: {
@@ -528,7 +529,9 @@ const translations = {
     skinsTab: "Skins",
     emotesTab: "Emotes",
     powerupsTab: "Potenciadores",
+    searchPlaceholder:"Buscar skins...",
     revivesTab: "Vidas"
+    
   },
   ru: {
     home: "Главная",
@@ -552,6 +555,7 @@ const translations = {
     skinsTab: "Скины",
     emotesTab: "Эмоции",
     powerupsTab: "Усилители",
+    searchPlaceholder:"Поиск скинов...",
     revivesTab: "Жизни"
   },
   ko: {
@@ -576,8 +580,35 @@ const translations = {
     skinsTab: "스킨",
     emotesTab: "감정표현",
     powerupsTab: "파워업",
+    searchPlaceholder:"스킨 검색...",
     revivesTab: "부활"
-  }
+  },
+
+  ar: { 
+    home:"الرئيسية", 
+    manual:"دليل", 
+    media:"وسائط", 
+    shop:"المتجر", 
+    account:"الحساب",
+    playLink:"العب على itch.io", 
+    gameModes:"أوضاع اللعبة",
+    frontman:"وضع فرونتمان", 
+    frontmanDesc:"تحكم في الألعاب. طبق القواعد.",
+    guard:"وضع الحارس", 
+    guardDesc:"خدم المنظمة. تخلص من اللاعبين.",
+    multiplayer:"وضع متعدد اللاعبين", 
+    multiplayerDesc:"حتى 100 لاعب حول العالم.",
+    junho:"ملفات جون-هو", 
+    junhoDesc:"تحقق من الجزيرة.",
+    manualText:"اتبع القواعد. إذا فشلت، ستتم إقصاؤك.",
+    mediaText:"وسائط", 
+    shopNotice:"تسجيل الدخول مطلوب لشراء العناصر.",
+    skinsTab:"أزياء", 
+    emotesTab:"حركات", 
+    powerupsTab:"قوى", 
+    revivesTab:"إحياء",
+    searchPlaceholder:"ابحث عن الأزياء..."
+ }
 };
 
 // CHANGE LANGUAGE
@@ -639,19 +670,86 @@ function switchPage(id) {
 }
 
 /* GAMES */
-const games=[
-{img:"images/shot1.png",title:"Red Light, Green Light",desc:"If they catch you moving, you're going to be killed!"},
-{img:"images/shot2.png",title:"Dalgona",desc:"Carefully carve out the shape... Or be eliminated..."},
-{img:"images/shot3.png",title:"Tug of War",desc:"Tug of War needs more than just raw strength..."},
-{img:"images/shot4.png",title:"Marbles",desc:"We're Gganbu, aren't we?"},
-{img:"images/shot5.png",title:"Glass Bridge",desc:"One wrong step, and you're eliminated!"},
-{img:"images/shot6.png",title:"Squid Game",desc:"Only one can survive..."},
-{img:"images/shot7.png",title:"Pentathalon",desc:"A game consisted of five children's mini-games: Ddakji, Biseokchigi, Gonggi, Paengi, and Jegi..."},
-{img:"images/shot8.png",title:"Mingle",desc:"Work as a team & find a room..."},
-{img:"images/shot9.png",title:"Hide & Seek",desc:"Is it like the kids version? Do we just have to find them and then they're out?."},
-{img:"images/shot10.png",title:"Jump Rope",desc:"One your off... You won't come back..."},
-{img:"images/shot11.png",title:"Sky Squid Game",desc:"In the final game, all of you will get to choose which players will be eliminated..."}
-];
+const games = {
+  en: [
+    {img:"images/shot1.png",title:"Red Light, Green Light",desc:"If they catch you moving, you're going to be killed!"},
+    {img:"images/shot2.png",title:"Dalgona",desc:"Carefully carve out the shape... Or be eliminated..."},
+    {img:"images/shot3.png",title:"Tug of War",desc:"Tug of War needs more than just raw strength..."},
+    {img:"images/shot4.png",title:"Marbles",desc:"We're Gganbu, aren't we?"},
+    {img:"images/shot5.png",title:"Glass Bridge",desc:"One wrong step, and you're eliminated!"},
+    {img:"images/shot6.png",title:"Squid Game",desc:"Only one can survive..."},
+    {img:"images/shot7.png",title:"Pentathalon",desc:"A game consisted of five children's mini-games: Ddakji, Biseokchigi, Gonggi, Paengi, and Jegi..."},
+    {img:"images/shot8.png",title:"Mingle",desc:"Work as a team & find a room..."},
+    {img:"images/shot9.png",title:"Hide & Seek",desc:"Is it like the kids version? Do we just have to find them and then they're out?."},
+    {img:"images/shot10.png",title:"Jump Rope",desc:"One your off... You won't come back..."},
+    {img:"images/shot11.png",title:"Sky Squid Game",desc:"In the final game, all of you will get to choose which players will be eliminated..."}
+  ],
+  fr: [
+    {img:"images/shot1.png",title:"Feu rouge, feu vert",desc:"Si ils vous attrapent en train de bouger, vous serez éliminé !"},
+    {img:"images/shot2.png",title:"Dalgona",desc:"Sculptez soigneusement la forme... Ou soyez éliminé..."},
+    {img:"images/shot3.png",title:"Tir à la corde",desc:"Le tir à la corde nécessite plus que de la force brute..."},
+    {img:"images/shot4.png",title:"Billard coréen",desc:"Nous sommes des Gganbu, n'est-ce pas ?"},
+    {img:"images/shot5.png",title:"Pont de verre",desc:"Un faux pas, et vous êtes éliminé !"},
+    {img:"images/shot6.png",title:"Jeu du calmar",desc:"Un seul peut survivre..."},
+    {img:"images/shot7.png",title:"Pentathlon",desc:"Un jeu composé de cinq mini-jeux pour enfants : Ddakji, Biseokchigi, Gonggi, Paengi et Jegi..."},
+    {img:"images/shot8.png",title:"Mingle",desc:"Travaillez en équipe et trouvez une salle..."},
+    {img:"images/shot9.png",title:"Cache-cache",desc:"C'est comme la version enfants ? On doit juste les trouver puis ils sont hors-jeu ?"},
+    {img:"images/shot10.png",title:"Corde à sauter",desc:"Si vous échouez... Vous ne reviendrez pas..."},
+    {img:"images/shot11.png",title:"Jeu du calmar dans le ciel",desc:"Dans le dernier jeu, vous choisirez tous quels joueurs seront éliminés..."}
+  ],
+  es: [
+    {img:"images/shot1.png",title:"Luz roja, luz verde",desc:"¡Si te atrapan moviéndote, serás eliminado!"},
+    {img:"images/shot2.png",title:"Dalgona",desc:"Corta cuidadosamente la forma... O serás eliminado..."},
+    {img:"images/shot3.png",title:"Tira y afloja",desc:"El tira y afloja requiere más que fuerza bruta..."},
+    {img:"images/shot4.png",title:"Canicas",desc:"Somos Gganbu, ¿verdad?"},
+    {img:"images/shot5.png",title:"Puente de cristal",desc:"¡Un paso en falso y estás fuera!"},
+    {img:"images/shot6.png",title:"Juego del calamar",desc:"Solo uno puede sobrevivir..."},
+    {img:"images/shot7.png",title:"Pentatlón",desc:"Un juego compuesto por cinco mini-juegos para niños: Ddakji, Biseokchigi, Gonggi, Paengi y Jegi..."},
+    {img:"images/shot8.png",title:"Mingle",desc:"Trabaja en equipo y encuentra una sala..."},
+    {img:"images/shot9.png",title:"Escondite",desc:"¿Es como la versión infantil? ¿Solo tenemos que encontrarlos y se eliminan?"},
+    {img:"images/shot10.png",title:"Saltar la cuerda",desc:"Si fallas... No volverás..."},
+    {img:"images/shot11.png",title:"Juego del calamar en el cielo",desc:"En el juego final, todos elegirán qué jugadores serán eliminados..."}
+  ],
+  ar: [
+    {img:"images/shot1.png",title:"أحمر، أخضر",desc:"إذا أمسكوك أثناء الحركة، سيتم قتلك!"},
+    {img:"images/shot2.png",title:"دالغونا",desc:"قم بنحت الشكل بعناية... أو ستُقصى..."},
+    {img:"images/shot3.png",title:"شد الحبل",desc:"شد الحبل يحتاج أكثر من القوة فقط..."},
+    {img:"images/shot4.png",title:"الرخام",desc:"نحن Gganbu، أليس كذلك؟"},
+    {img:"images/shot5.png",title:"جسر زجاجي",desc:"خطوة خاطئة واحدة، وستُقصى!"},
+    {img:"images/shot6.png",title:"لعبة الحبار",desc:"واحد فقط يمكنه النجاة..."},
+    {img:"images/shot7.png",title:"البنتاثلون",desc:"لعبة مكونة من خمسة ألعاب صغيرة للأطفال: Ddakji، Biseokchigi، Gonggi، Paengi، وJegi..."},
+    {img:"images/shot8.png",title:"التواصل",desc:"اعمل كفريق وابحث عن غرفة..."},
+    {img:"images/shot9.png",title:"الغميضة",desc:"هل هي مثل نسخة الأطفال؟ هل علينا فقط إيجادهم ثم يُقصون؟"},
+    {img:"images/shot10.png",title:"نط الحبل",desc:"إذا فشلت... لن تعود..."},
+    {img:"images/shot11.png",title:"لعبة الحبار السماوية",desc:"في اللعبة النهائية، ستختارون جميعًا أي اللاعبين سيتم التخلص منهم..."}
+  ],
+  ru: [
+    {img:"images/shot1.png",title:"Красный свет, зелёный свет",desc:"Если они поймают вас в движении, вас убьют!"},
+    {img:"images/shot2.png",title:"Дальгона",desc:"Аккуратно вырежьте форму... Или вас исключат..."},
+    {img:"images/shot3.png",title:"Перетягивание каната",desc:"Перетягивание каната требует больше, чем просто сила..."},
+    {img:"images/shot4.png",title:"Шарики",desc:"Мы же Гганбу, не так ли?"},
+    {img:"images/shot5.png",title:"Стеклянный мост",desc:"Один неверный шаг — и вы исключены!"},
+    {img:"images/shot6.png",title:"Игра кальмара",desc:"Выжить может только один..."},
+    {img:"images/shot7.png",title:"Пентатлон",desc:"Игра из пяти детских мини-игр: Ddakji, Biseokchigi, Gonggi, Paengi, и Jegi..."},
+    {img:"images/shot8.png",title:"Взаимодействие",desc:"Работайте в команде и найдите комнату..."},
+    {img:"images/shot9.png",title:"Прятки",desc:"Это как детская версия? Мы просто должны их найти, и они выбиваются?"},
+    {img:"images/shot10.png",title:"Скакалка",desc:"Если пропустишь... назад не вернешься..."},
+    {img:"images/shot11.png",title:"Небесная игра кальмара",desc:"В финальной игре вы выберете, какие игроки будут исключены..."}
+  ],
+  ko: [
+    {img:"images/shot1.png",title:"무궁화 게임",desc:"움직이다 걸리면 바로 탈락!"},
+    {img:"images/shot2.png",title:"달고나",desc:"조심히 모양을 파내세요... 아니면 탈락..."},
+    {img:"images/shot3.png",title:"줄다리기",desc:"줄다리기는 힘만으로 되는 게 아니야..."},
+    {img:"images/shot4.png",title:"구슬치기",desc:"우리 깐부지, 그렇지?"},
+    {img:"images/shot5.png",title:"유리다리",desc:"한 발 잘못 디디면 바로 탈락!"},
+    {img:"images/shot6.png",title:"오징어 게임",desc:"단 한 명만 살아남는다..."},
+    {img:"images/shot7.png",title:"펜타슬론",desc:"다섯 가지 어린이 미니게임으로 구성: 딱지, 비석치기, 공기, 팽이, 제기..."},
+    {img:"images/shot8.png",title:"팀 활동",desc:"팀워크로 방을 찾아라..."},
+    {img:"images/shot9.png",title:"숨바꼭질",desc:"어린이 버전과 같은가? 그냥 찾으면 탈락?"},
+    {img:"images/shot10.png",title:"줄넘기",desc:"실수하면... 다시 돌아올 수 없어..."},
+    {img:"images/shot11.png",title:"스카이 오징어 게임",desc:"마지막 게임에서 누가 탈락할지 직접 선택할 수 있다..."}
+  ]
+};
 
 let index=0;
 const gameImg=document.getElementById("gameImg");
@@ -667,37 +765,141 @@ function nextGame(){index=(index+1)%games.length;renderGame();}
 function prevGame(){index=(index-1+games.length)%games.length;renderGame();}
 
 /* SHOP DATA */
-const skinsData=[
-{name:"Seong Gi-hun",rarity:"common",color:"#1E90FF",collab:false,price:100,img:"images/skin1.png"},
-{name:"Cho Sang-woo",rarity:"common",color:"#1E90FF",collab:false,price:120,img:"images/skin2.png"},
-{name:"Kang Sae-byeok",rarity:"rare",color:"#FF0000",collab:false,price:200,img:"images/skin3.png"},
-{name:"Abdul Ali",rarity:"common",color:"#1E90FF",collab:false,price:110,img:"images/skin4.png"},
-{name:"Oh Il-nam",rarity:"special",color:"#50C878",collab:false,price:500,img:"images/skin5.png"},
-{name:"Han Mi-nyeo",rarity:"rare",color:"#FF0000",collab:false,price:250,img:"images/skin6.png"},
-{name:"Jang Deok-su",rarity:"superrare",color:"#FF69B4",collab:false,price:400,img:"images/skin7.png"},
-{name:"Hwang Jun-ho",rarity:"mythical",color:"#800080",collab:false,price:1000,img:"images/skin8.png"},
-{name:"Movie Shadow",rarity:"exotic",color:"#D4AF37",collab:true,price:1000,img:"images/skin9.png"},
-{name:"SpongeBob",rarity:"wild",color:"linear-gradient(45deg,#FF0000,#FF7F00,#FFFF00,#00FF00,#0000FF,#4B0082,#8F00FF)",collab:true,price:2000,img:"images/skin10.png"}
-];
+/* SKINS */
+const skinsData = {
+  en:[
+    {name:"Seong Gi-hun",rarity:"common",collab:false,price:100,img:"images/skin1.png"},
+    {name:"Cho Sang-woo",rarity:"common",collab:false,price:120,img:"images/skin2.png"},
+    {name:"Kang Sae-byeok",rarity:"rare",collab:false,price:200,img:"images/skin3.png"},
+    {name:"Abdul Ali",rarity:"common",collab:false,price:110,img:"images/skin4.png"},
+    {name:"Oh Il-nam",rarity:"special",collab:false,price:500,img:"images/skin5.png"},
+    {name:"Han Mi-nyeo",rarity:"rare",collab:false,price:250,img:"images/skin6.png"},
+    {name:"Jang Deok-su",rarity:"superrare",collab:false,price:400,img:"images/skin7.png"},
+    {name:"Hwang Jun-ho",rarity:"mythical",collab:false,price:1000,img:"images/skin8.png"},
+    {name:"Movie Shadow",rarity:"exotic",collab:true,price:1000,img:"images/skin9.png"},
+    {name:"SpongeBob",rarity:"wild",collab:true,price:2000,img:"images/skin10.png"}
+  ],
+  fr:[
+    {name:"Seong Gi-hun",rarity:"commun",collab:false,price:100,img:"images/skin1.png"},
+    {name:"Cho Sang-woo",rarity:"commun",collab:false,price:120,img:"images/skin2.png"},
+    {name:"Kang Sae-byeok",rarity:"rare",collab:false,price:200,img:"images/skin3.png"},
+    {name:"Abdul Ali",rarity:"commun",collab:false,price:110,img:"images/skin4.png"},
+    {name:"Oh Il-nam",rarity:"spécial",collab:false,price:500,img:"images/skin5.png"},
+    {name:"Han Mi-nyeo",rarity:"rare",collab:false,price:250,img:"images/skin6.png"},
+    {name:"Jang Deok-su",rarity:"très rare",collab:false,price:400,img:"images/skin7.png"},
+    {name:"Hwang Jun-ho",rarity:"mythique",collab:false,price:1000,img:"images/skin8.png"},
+    {name:"Ombre du film",rarity:"exotique",collab:true,price:1000,img:"images/skin9.png"},
+    {name:"Bob l'éponge",rarity:"sauvage",collab:true,price:2000,img:"images/skin10.png"}
+  ],
+  es:[
+    {name:"Seong Gi-hun",rarity:"común",collab:false,price:100,img:"images/skin1.png"},
+    {name:"Cho Sang-woo",rarity:"común",collab:false,price:120,img:"images/skin2.png"},
+    {name:"Kang Sae-byeok",rarity:"raro",collab:false,price:200,img:"images/skin3.png"},
+    {name:"Abdul Ali",rarity:"común",collab:false,price:110,img:"images/skin4.png"},
+    {name:"Oh Il-nam",rarity:"especial",collab:false,price:500,img:"images/skin5.png"},
+    {name:"Han Mi-nyeo",rarity:"raro",collab:false,price:250,img:"images/skin6.png"},
+    {name:"Jang Deok-su",rarity:"muy raro",collab:false,price:400,img:"images/skin7.png"},
+    {name:"Hwang Jun-ho",rarity:"mitológico",collab:false,price:1000,img:"images/skin8.png"},
+    {name:"Sombra de película",rarity:"exótico",collab:true,price:1000,img:"images/skin9.png"},
+    {name:"Bob Esponja",rarity:"salvaje",collab:true,price:2000,img:"images/skin10.png"}
+  ],
+  ar:[
+    {name:"سونغ جي-هون",rarity:"عادي",collab:false,price:100,img:"images/skin1.png"},
+    {name:"تشو سانغ-وو",rarity:"عادي",collab:false,price:120,img:"images/skin2.png"},
+    {name:"كانغ ساي-بيوك",rarity:"نادر",collab:false,price:200,img:"images/skin3.png"},
+    {name:"عبد علي",rarity:"عادي",collab:false,price:110,img:"images/skin4.png"},
+    {name:"أوه إيل-نام",rarity:"خاص",collab:false,price:500,img:"images/skin5.png"},
+    {name:"هان مي-نيو",rarity:"نادر",collab:false,price:250,img:"images/skin6.png"},
+    {name:"جانغ دوك-سو",rarity:"نادر جدًا",collab:false,price:400,img:"images/skin7.png"},
+    {name:"هوانغ جون-هو",rarity:"أسطوري",collab:false,price:1000,img:"images/skin8.png"},
+    {name:"ظل الفيلم",rarity:"غريب",collab:true,price:1000,img:"images/skin9.png"},
+    {name:"سبونج بوب",rarity:"متوحش",collab:true,price:2000,img:"images/skin10.png"}
+  ],
+  ru:[
+    {name:"Сон Ги-хун",rarity:"обычный",collab:false,price:100,img:"images/skin1.png"},
+    {name:"Чо Сан-ву",rarity:"обычный",collab:false,price:120,img:"images/skin2.png"},
+    {name:"Канг Се-бёк",rarity:"редкий",collab:false,price:200,img:"images/skin3.png"},
+    {name:"Абдул Али",rarity:"обычный",collab:false,price:110,img:"images/skin4.png"},
+    {name:"О Ил-нам",rarity:"специальный",collab:false,price:500,img:"images/skin5.png"},
+    {name:"Хан Ми-нё",rarity:"редкий",collab:false,price:250,img:"images/skin6.png"},
+    {name:"Чан Док-су",rarity:"очень редкий",collab:false,price:400,img:"images/skin7.png"},
+    {name:"Хван Чжун-хо",rarity:"мифический",collab:false,price:1000,img:"images/skin8.png"},
+    {name:"Тень фильма",rarity:"экзотический",collab:true,price:1000,img:"images/skin9.png"},
+    {name:"Спанч Боб",rarity:"дикарь",collab:true,price:2000,img:"images/skin10.png"}
+  ],
+  ko:[
+    {name:"성기훈",rarity:"일반",collab:false,price:100,img:"images/skin1.png"},
+    {name:"조상우",rarity:"일반",collab:false,price:120,img:"images/skin2.png"},
+    {name:"강새벽",rarity:"희귀",collab:false,price:200,img:"images/skin3.png"},
+    {name:"압둘 알리",rarity:"일반",collab:false,price:110,img:"images/skin4.png"},
+    {name:"오일남",rarity:"특별",collab:false,price:500,img:"images/skin5.png"},
+    {name:"한미녀",rarity:"희귀",collab:false,price:250,img:"images/skin6.png"},
+    {name:"장덕수",rarity:"슈퍼희귀",collab:false,price:400,img:"images/skin7.png"},
+    {name:"황준호",rarity:"신화",collab:false,price:1000,img:"images/skin8.png"},
+    {name:"영화 그림자",rarity:"이국적",collab:true,price:1000,img:"images/skin9.png"},
+    {name:"스폰지밥",rarity:"야생",collab:true,price:2000,img:"images/skin10.png"}
+  ]
+};
 
-const emotesData=[
-{name:"Dance 1",rarity:"common"},
-{name:"Dance 2",rarity:"rare"},
-{name:"Dance 3",rarity:"superrare"},
-{name:"Dance 4",rarity:"special"}
-];
+/* EMOTES */
+const emotesData = {
+  en:[
+    {name:"Dance 1",rarity:"common"},
+    {name:"Dance 2",rarity:"rare"},
+    {name:"Dance 3",rarity:"superrare"},
+    {name:"Dance 4",rarity:"special"}
+  ],
+  fr:[
+    {name:"Danse 1",rarity:"commun"},
+    {name:"Danse 2",rarity:"rare"},
+    {name:"Danse 3",rarity:"très rare"},
+    {name:"Danse 4",rarity:"spécial"}
+  ],
+  es:[
+    {name:"Baile 1",rarity:"común"},
+    {name:"Baile 2",rarity:"raro"},
+    {name:"Baile 3",rarity:"muy raro"},
+    {name:"Baile 4",rarity:"especial"}
+  ],
+  ar:[
+    {name:"رقص 1",rarity:"عادي"},
+    {name:"رقص 2",rarity:"نادر"},
+    {name:"رقص 3",rarity:"نادر جدًا"},
+    {name:"رقص 4",rarity:"خاص"}
+  ],
+  ru:[
+    {name:"Танец 1",rarity:"обычный"},
+    {name:"Танец 2",rarity:"редкий"},
+    {name:"Танец 3",rarity:"очень редкий"},
+    {name:"Танец 4",rarity:"специальный"}
+  ],
+  ko:[
+    {name:"춤 1",rarity:"일반"},
+    {name:"춤 2",rarity:"희귀"},
+    {name:"춤 3",rarity:"슈퍼희귀"},
+    {name:"춤 4",rarity:"특별"}
+  ]
+};
 
-const powerUpsData=[
-{name:"Speed Boost"},
-{name:"Shield"},
-{name:"Double XP"}
-];
+/* POWER-UPS */
+const powerUpsData = {
+  en:[{name:"Speed Boost"},{name:"Shield"},{name:"Double XP"}],
+  fr:[{name:"Boost de vitesse"},{name:"Bouclier"},{name:"Double XP"}],
+  es:[{name:"Aumento de velocidad"},{name:"Escudo"},{name:"XP doble"}],
+  ar:[{name:"زيادة السرعة"},{name:"درع"},{name:"ضعف الخبرة"}],
+  ru:[{name:"Ускорение"},{name:"Щит"},{name:"Двойной опыт"}],
+  ko:[{name:"속도 증가"},{name:"방패"},{name:"경험치 2배"}]
+};
 
-const revivesData=[
-{name:"1 Revive"},
-{name:"Pack of 5 Revives"},
-{name:"Pack of 10 Revives"}
-];
+/* REVIVES */
+const revivesData = {
+  en:[{name:"1 Revive"},{name:"Pack of 5 Revives"},{name:"Pack of 10 Revives"}],
+  fr:[{name:"1 Vie"},{name:"Pack de 5 vies"},{name:"Pack de 10 vies"}],
+  es:[{name:"1 Vida"},{name:"Paquete de 5 vidas"},{name:"Paquete de 10 vidas"}],
+  ar:[{name:"إحياء 1"},{name:"حزمة 5 إحياءات"},{name:"حزمة 10 إحياءات"}],
+  ru:[{name:"1 Жизнь"},{name:"Пакет из 5 жизней"},{name:"Пакет из 10 жизней"}],
+  ko:[{name:"부활 1"},{name:"부활 5개 팩"},{name:"부활 10개 팩"}]
+};
 
 /* SHOP FUNCTIONS */
 function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1);}

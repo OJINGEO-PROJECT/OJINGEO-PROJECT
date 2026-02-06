@@ -416,6 +416,8 @@ const supabase = createClient(
   "https://rqshkyiggycfypilcmzk.supabase.co",
   "sb_publishable_Tn7XLKoh21eS673C0oZDwQ_5NgLMthf"
 );
+  
+let currentLang = document.getElementById("langSelect").value || "en";
 
 async function init() {
   // Supabase session check
@@ -613,6 +615,7 @@ const translations = {
 
 // CHANGE LANGUAGE
 window.changeLanguage = function() {
+  currentLang = document.getElementById("langSelect").value;
   const lang = document.getElementById("langSelect").value;
 
   // Update top buttons

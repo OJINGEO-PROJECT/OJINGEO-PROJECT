@@ -904,68 +904,75 @@ const revivesData = {
 /* SHOP FUNCTIONS */
 function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 
+
+// Pick the right arrays for current language
+function getSkins() { return skinsData[currentLang]; }
+function getEmotes() { return emotesData[currentLang]; }
+function getPowerUps() { return powerUpsData[currentLang]; }
+function getRevives() { return revivesData[currentLang]; }
+
+// RENDER FUNCTIONS
 function renderSkins(){
-  const grid=document.getElementById("skinGrid");
-  grid.innerHTML="";
-  const search=document.getElementById("skinSearch").value.toLowerCase();
-  const rarity=document.getElementById("rarityFilter").value;
-  const collab=document.getElementById("collabFilter").value;
-  skinsData.forEach(skin=>{
-    if(skin.name.toLowerCase().includes(search) && 
-       (rarity==="" || skin.rarity===rarity) &&
-       (collab==="" || skin.collab.toString()===collab)){
-      const div=document.createElement("div");
-      div.className="skin-card";
-      div.style.background=skin.color;
-      div.innerHTML=`
+  const grid = document.getElementById("skinGrid");
+  grid.innerHTML = "";
+  const search = document.getElementById("skinSearch").value.toLowerCase();
+  const rarity = document.getElementById("rarityFilter").value;
+  const collab = document.getElementById("collabFilter").value;
+  getSkins().forEach(skin => {
+    if(
+      skin.name.toLowerCase().includes(search) &&
+      (rarity === "" || skin.rarity === rarity) &&
+      (collab === "" || skin.collab.toString() === collab)
+    ){
+      const div = document.createElement("div");
+      div.className = "skin-card";
+      div.innerHTML = `
         <img src="${skin.img}" alt="${skin.name}">
         <div>${skin.name}</div>
-        <span class="skin-rarity">${capitalize(skin.rarity)}</span>
-        <div>₩${skin.price}</div>
+        <div class="skin-rarity">${capitalize(skin.rarity)}</div>
+        ${skin.collab ? '<div class="collab-badge">Collab</div>' : ''}
       `;
-      if(skin.collab){
-        const badge=document.createElement("div");
-        badge.className="collab-badge";
-        badge.textContent="Collab";
-        div.appendChild(badge);
-      }
       grid.appendChild(div);
     }
   });
 }
 
 function renderEmotes(){
-  const grid=document.getElementById("emotesGrid");
-  grid.innerHTML="";
-  emotesData.forEach(e=>{
-    const div=document.createElement("div");
-    div.className="skin-card";
-    div.innerHTML=`${e.name}<br><span class="skin-rarity">${capitalize(e.rarity)}</span>`;
+  const grid = document.getElementById("emotesGrid");
+  grid.innerHTML = "";
+  getEmotes().forEach(e => {
+    const div = document.createElement("div");
+    div.className = "skin-card";
+    div.innerHTML = `<div>${e.name}</div><div class="skin-rarity">${capitalize(e.rarity)}</div>`;
     grid.appendChild(div);
   });
 }
 
 function renderPowerUps(){
-  const grid=document.getElementById("powerUpsGrid");
-  grid.innerHTML="";
-  powerUpsData.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="skin-card";
-    div.innerText=p.name;
+  const grid = document.getElementById("powerUpsGrid");
+  grid.innerHTML = "";
+  getPowerUps().forEach(p => {
+    const div = document.createElement("div");
+    div.className = "skin-card";
+    div.innerHTML = `<div>${p.name}</div>`;
     grid.appendChild(div);
   });
 }
 
 function renderRevives(){
-  const grid=document.getElementById("revivesGrid");
-  grid.innerHTML="";
-  revivesData.forEach(r=>{
-    const div=document.createElement("div");
-    div.className="skin-card";
-    div.innerText=r.name;
+  const grid = document.getElementById("revivesGrid");
+  grid.innerHTML = "";
+  getRevives().forEach(r => {
+    const div = document.createElement("div");
+    div.className = "skin-card";
+    div.innerHTML = `<div>${r.name}</div>`;
     grid.appendChild(div);
   });
 }
+
+// UPDATE LANGUAGE
+window.changeLanguage = function(){
+  currentLang = document.getElementById("langSelect").value;
 
 function switchShopTab(id, tab){
   document.querySelectorAll(".shop-tab").forEach(t=>t.classList.remove("active"));
@@ -994,13 +1001,28 @@ function changeLanguage(){
   btns[4].textContent = translations[lang].account;
 }
 
-/* INITIAL RENDER */
-renderGame();
-renderSkins();
-renderEmotes();
-renderPowerUps();
-renderRevives();
+  document.querySelector("#manual h2").textContent = translations[currentLang].manual;
+  document.querySelector("#manual p").textContent = translations[currentLang].manualText;
+  document.querySelector("#media h2").textContent = translations[currentLang].mediaText;
+  document.querySelector("#shop h2").textContent = translations[currentLang].shop;
+  document.querySelector("#shopNotice").textContent = translations[currentLang].shopNotice;
+  document.querySelector(".shop-tab:nth-child(1)").textContent = translations[currentLang].skinsTab;
+  document.querySelector(".shop-tab:nth-child(2)").textContent = translations[currentLang].emotesTab;
+  document.querySelector(".shop-tab:nth-child(3)").textContent = translations[currentLang].powerupsTab;
+  document.querySelector(".shop-tab:nth-child(4)").textContent = translations[currentLang].revivesTab;
 
+  document.getElementById("skinSearch").placeholder = translations[currentLang].searchPlaceholder;
+
+  // Re-render everything in new language
+  renderGame();
+  renderSkins();
+  renderEmotes();
+  renderPowerUps();
+  renderRevives();
+}
+
+// INIT
+document.addEventListener("DOMContentLoaded", init);
 /* HIDE LOADING SCREEN AFTER LOAD */
 window.addEventListener("load", () => {
   const loading = document.getElementById("loadingScreen");
